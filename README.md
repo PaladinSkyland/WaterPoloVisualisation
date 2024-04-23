@@ -14,7 +14,7 @@ Pour installer WaterPoloVisualisation, suivez ces étapes :
 
 1. Cloner le dépôt :
    ```sh
-   git clone https://github.com/votre-nom-utilisateur/WaterPoloVisualisation.git
+   git clone https://github.com/PaladinSkyland/WaterPoloVisualisation
 2. Installer les dépendances :
    ```sh
     cd WaterPoloVisualisation

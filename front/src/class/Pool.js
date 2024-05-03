@@ -1,5 +1,4 @@
 import Player from './Player';
-import '../css/pool.css';
 
 class Pool {
     constructor() {

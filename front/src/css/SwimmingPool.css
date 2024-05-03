@@ -15,7 +15,8 @@
     border: 2px solid black;
     margin: 0 10%;
     width: 70%;
-    height: 35vw
+    height: 35vw;
+    position: 'relative';
 }
 
 .waterpolo-pool {
@@ -42,4 +43,13 @@
 
 .anchor{
     width: 20px;
+}
+
+.player{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: red;
+    z-index: 1;
 }

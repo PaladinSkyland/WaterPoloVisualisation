@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div className="App">
-      <SwimmingPool gender={gender}/>
+      <SwimmingPool gender={gender} pool={pool}/>
       <Settings gender={gender} setGender={setGender}/>
       
     </div>

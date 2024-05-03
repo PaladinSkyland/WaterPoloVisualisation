@@ -1,16 +1,17 @@
 import '../css/SwimmingPool.css'
 
-function SwimmingPool(){
+function SwimmingPool(props){
+
+    
+
     return(
         <div>
-            <div class="pool-container">
-                <div class="title">
+            <div className="pool-container">
+                <div className="title">
                     Visualisation des trajectoires de poloïstes
                 </div>
-                <div class="swimming-pool">
-                    <div class="waterpolo-pool">
-
-                    </div>
+                <div className="swimming-pool">
+                    <div className={'waterpolo-pool ' + props.gender}/>
                 </div>
             </div>
         </div>

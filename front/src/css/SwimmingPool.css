@@ -1,0 +1,45 @@
+.pool-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%
+}
+
+.swimming-pool{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6472ef;
+    border: 2px solid black;
+    margin: 0 10%;
+    width: 70%;
+    height: 35vw
+}
+
+.waterpolo-pool {
+    background-color: transparent;
+    border: 2px solid black;
+
+}
+
+.waterpolo-pool.masculin{
+    width: 60%;
+    height: 80%;
+}
+
+.waterpolo-pool.feminin{
+    width: 50%;
+    height: 80%;
+}
+
+.title{
+    margin: 2vw 0;
+    font-weight: bold;
+    font-size: 2vw;
+}
+
+.anchor{
+    width: 20px;
+}

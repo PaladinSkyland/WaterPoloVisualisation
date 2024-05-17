@@ -5,6 +5,9 @@ WaterPoloVisualisation est une application destinée à fournir une visualisatio
 
 Ce projet vise à améliorer l'expérience d'entraînement de l'équipe nationale française de water-polo en offrant un outil de visualisation des mouvements des joueurs pendant les matchs. En fournissant aux entraîneurs des insights en temps réel sur la performance des joueurs, l'application vise à améliorer le développement des athlètes et le suivi de leur performance.
 
+## Githubpages
+- [WaterPoloVisualisation](https://paladinskyland.github.io/WaterPoloVisualisation/) - Visualisation du water-polo sur githubpages.
+
 ## Fonctionnalités
 - Traitement des données pour extraire les informations désirées des capteurs.
 - Visualisation en temps réel des trajectoires des joueurs sur un terrain virtuel de water-polo.

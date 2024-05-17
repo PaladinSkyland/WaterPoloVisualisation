@@ -1,6 +1,8 @@
 import '../css/SwimmingPool.css'
-import { Stage, Layer, Rect, Circle, Star, Text } from 'react-konva';
+import { Stage, Layer, Rect, Circle } from 'react-konva';
 import React, { useEffect, useState, useRef } from 'react';
+import WaterpoloPoolLength from './WaterpoloPoolLength';
+import WaterpoloPoolWidth from './WaterpoloPoolWidth';
 
 function SwimmingPool(props){
     const stageRef = useRef(null);
@@ -36,6 +38,7 @@ function SwimmingPool(props){
             <div className="pool-container">
                 <div className="title">
                     Visualisation des trajectoires de poloïstes
+                    
                 </div>
                 <div ref={containerRef} className="stage-container">
                     <Stage
@@ -56,17 +59,10 @@ function SwimmingPool(props){
                                 strokeWidth={0.2}
                             />
                         </Layer>
-                        <Layer className="waterpolo-pool">
-                            <Rect
-                                x={2}
-                                y={2}
-                                width={props.pool.getWaterpoloPoolWidth()}
-                                height={props.pool.getWaterpoloPoolHeight()}
-                                border={10}
-                                stroke="black"
-                                strokeWidth={0.1}
-                            />
-                        </Layer>
+                        <WaterpoloPoolLength gender={props.gender} yPos={0}></WaterpoloPoolLength>
+                        <WaterpoloPoolLength gender={props.gender} yPos={20.5}></WaterpoloPoolLength> 
+                        <WaterpoloPoolWidth gender={props.gender} xPos={5}> </WaterpoloPoolWidth>
+
                         <Layer className="players">
                             {props.pool.players.map((player, index) => (
                                 <Circle

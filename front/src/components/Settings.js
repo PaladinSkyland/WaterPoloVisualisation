@@ -1,35 +1,33 @@
+import React from 'react';
+import Distance from './Distance';
+import Gender from './Gender';
 
-function Settings(props){
-   
+function Settings({ values, setValues }) {
 
-    const onOptionChange = e => {
-        props.setGender(e.target.value)
+    const handleChange = e => {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value
+        })
     }
 
-    return(
-        <div>
-            <input
-                type="radio"
-                name="gender"
-                value="masculin"
-                id="masculin"
-                onChange={onOptionChange}
-                checked={props.gender === "masculin"}
-            />
-        <label htmlFor="masculin">Masculin</label>
-        <input
-                type="radio"
-                name="gender"
-                value="feminin"
-                id="feminin"
-                onChange={onOptionChange}
-                checked={props.gender === "feminin"}
-            />
-        <label htmlFor="feminin">Feminin</label>
-
-        </div>
-        
-    )
+  return (
+    <div>
+      <Distance 
+        label="Marge" 
+        name="marge" 
+        value={values.marge} 
+        handleChange={handleChange} 
+      />
+      <Distance 
+        label="Ancre" 
+        name="ancre" 
+        value={values.ancre} 
+        handleChange={handleChange} 
+      />
+      <Gender value={values.gender} handleChange={handleChange} />
+    </div>
+  );
 }
 
-export default Settings
+export default Settings;

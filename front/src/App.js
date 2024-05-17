@@ -1,13 +1,19 @@
 import './css/App.css';
 import './components/SwimmingPool';
 import SwimmingPool from './components/SwimmingPool';
-import Settings from './components/Settings';
+import SettingsContainer from './components/SettingsContainer';
 import Pool from './class/Pool';
 import React, { useEffect, useState } from 'react';
 
 function App() {
   const [pool, setPool] = useState(new Pool());
-  const [gender, setGender] = useState("masculin");
+
+  const [showInputs, setShowInputs] = useState(false);
+  const [values, setValues] = useState({
+    marge: '',
+    ancre: '',
+    gender: 'masculin'
+  });
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8080?file=dynamic4'); // Adresse du serveur WebSocket
@@ -28,9 +34,8 @@ function App() {
 
   return (
     <div className="App">
-      <SwimmingPool gender={gender} pool={pool}/>
-      <Settings gender={gender} setGender={setGender}/>
-      
+      <SwimmingPool gender={values.gender} pool={pool}/>
+      <SettingsContainer values={values} setValues={setValues} showInputs={showInputs} setShowInputs={setShowInputs} />
     </div>
   );
 }

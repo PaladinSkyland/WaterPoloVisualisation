@@ -6,9 +6,11 @@ function Distance({ label, name, value, handleChange }) {
       <label>
         {label}:
         <input 
-          type="text" 
+          type="number" 
           name={name} 
-          value={value} 
+          value={value}
+          min={0}
+          max={20}
           onChange={handleChange} 
         />
       </label>

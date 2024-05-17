@@ -13,19 +13,25 @@ function Settings({ values, setValues }) {
 
   return (
     <div>
-      <Distance 
-        label="Marge" 
-        name="marge" 
-        value={values.marge} 
-        handleChange={handleChange} 
-      />
-      <Distance 
-        label="Ancre" 
-        name="ancre" 
-        value={values.ancre} 
-        handleChange={handleChange} 
-      />
-      <Gender value={values.gender} handleChange={handleChange} />
+        <Distance 
+            label="MargeV" 
+            name="margeV" 
+            value={values.margeV} 
+            handleChange={handleChange} 
+        />
+        <Distance 
+            label="MargeH" 
+            name="margeH" 
+            value={values.ancre} 
+            handleChange={handleChange} 
+        />
+        <Distance
+            label="Ancre" 
+            name="ancre" 
+            value={values.ancre} 
+            handleChange={handleChange} 
+        />
+        <Gender value={values.gender} handleChange={handleChange} />
     </div>
   );
 }

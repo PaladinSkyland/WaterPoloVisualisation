@@ -10,7 +10,8 @@ function App() {
 
   const [showInputs, setShowInputs] = useState(false);
   const [values, setValues] = useState({
-    marge: '',
+    margeV: '',
+    margeH: '',
     ancre: '',
     gender: 'masculin'
   });

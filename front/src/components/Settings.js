@@ -22,13 +22,19 @@ function Settings({ values, setValues }) {
         <Distance 
             label="MargeH" 
             name="margeH" 
-            value={values.ancre} 
+            value={values.margeH} 
             handleChange={handleChange} 
         />
         <Distance
-            label="Ancre" 
-            name="ancre" 
-            value={values.ancre} 
+            label="AncreV" 
+            name="ancreV" 
+            value={values.ancreV} 
+            handleChange={handleChange} 
+        />
+        <Distance
+            label="AncreH" 
+            name="ancreH" 
+            value={values.ancreH} 
             handleChange={handleChange} 
         />
         <Gender value={values.gender} handleChange={handleChange} />

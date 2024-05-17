@@ -12,7 +12,8 @@ function App() {
   const [values, setValues] = useState({
     margeV: '',
     margeH: '',
-    ancre: '',
+    ancreV: '',
+    ancreH: '',
     gender: 'masculin'
   });
 

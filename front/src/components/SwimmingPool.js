@@ -1,6 +1,7 @@
 import '../css/SwimmingPool.css'
-import { Stage, Layer, Rect, Circle, Star, Text } from 'react-konva';
+import { Stage, Layer, Rect } from 'react-konva';
 import React, { useEffect, useState, useRef } from 'react';
+import Player from './Player';
 
 function SwimmingPool(props){
     const stageRef = useRef(null);
@@ -78,20 +79,13 @@ function SwimmingPool(props){
                                 y={2}
                                 width={getWaterpoloPoolWidth()}
                                 height={getWaterpoloPoolHeight()}
-                                border={10}
                                 stroke="black"
                                 strokeWidth={0.1}
                             />
                         </Layer>
                         <Layer className="players">
                             {props.pool.players.map((player, index) => (
-                                <Circle
-                                    key={index}
-                                    x={player.y}
-                                    y={player.x}
-                                    radius={0.5}
-                                    fill="red"
-                                />
+                                <Player player={player} index={index} key={index}/>
                             ))}
                         </Layer>
                     </Stage>

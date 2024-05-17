@@ -16,11 +16,17 @@ function App() {
       const data = JSON.parse(event.data);
       if (data.x && data.y) {
         const { anchor, x, y, z, precision } = data;
-        pool.movePlayerOrAdd(anchor, x, y, z, precision);
+        setPool((currentPool) => {
+          const newPool = Object.create(
+            Object.getPrototypeOf(currentPool),
+            Object.getOwnPropertyDescriptors(currentPool)
+          );
+          newPool.movePlayerOrAdd(anchor, x, y, z, precision);
+          return newPool;
+        });
       }
-      setPool({ ...pool });
     };
-
+  
     return () => {
       ws.close();
     };

@@ -5,7 +5,6 @@ function Player(props) {
     const { player, index } = props;
     player.speed = player.y;
     const size = 0.5;
-    const barWidth = size + Math.min(player.speed, 20) / 20 * size;
 
     const getColorForValue = (value, minValue, maxValue) => {
         const normalizedValue = Math.min(Math.max(value / maxValue, minValue), 1);

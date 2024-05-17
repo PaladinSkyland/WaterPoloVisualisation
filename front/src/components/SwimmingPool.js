@@ -15,24 +15,25 @@ function SwimmingPool(props){
         scale: 1,
     });
     
-    const fitStageIntoParentContainer = () => {
-        if (containerRef.current) {
-            const containerWidth = containerRef.current.offsetWidth;
-            const scale = containerWidth / (props.pool.getPoolWidth());
-            setDimensions({
-                width: props.pool.getPoolWidth() * scale,
-                height: props.pool.getPoolHeight() * scale,
-                scale,
-            });
-        }
-    };
     
     useEffect(() => {
+        const fitStageIntoParentContainer = () => {
+            if (containerRef.current) {
+                const containerWidth = containerRef.current.offsetWidth;
+                const scale = containerWidth / (props.pool.getPoolWidth());
+                setDimensions({
+                    width: props.pool.getPoolWidth() * scale,
+                    height: props.pool.getPoolHeight() * scale,
+                    scale,
+                });
+            }
+        };
+
         fitStageIntoParentContainer();
         window.addEventListener('resize', fitStageIntoParentContainer);
     
         return () => {window.removeEventListener('resize', fitStageIntoParentContainer)};
-    }, []);
+    }, [props.pool]);
     
     return(
         <div>

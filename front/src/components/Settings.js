@@ -10,7 +10,7 @@ function Settings({ values, setValues }) {
             [e.target.name]: e.target.value
         })
     }
-
+    
   return (
     <div>
         <Distance 

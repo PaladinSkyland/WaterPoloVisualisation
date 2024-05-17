@@ -18,7 +18,7 @@ function App() {
   });
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080?file=dynamic4'); // Adresse du serveur WebSocket
+    const ws = new WebSocket('ws://localhost:8080?file=dynamic5'); // Adresse du serveur WebSocket
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);

@@ -15,8 +15,8 @@ class Pool {
         this.height = 25; // Hauteur du bassin en mètres
         this.depth = 2; // Profondeur du bassin en mètres
 
-        this.origine_coord_x = 25;
-        this.origine_coord_y = -0.25;
+        this.origine_coord_x = 0;
+        this.origine_coord_y = 0;
 
         this.players = [];
     }

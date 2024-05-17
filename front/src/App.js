@@ -7,10 +7,10 @@ import React, { useEffect, useState } from 'react';
 
 function App() {
   const [pool, setPool] = useState(new Pool());
-  const [gender, setGender] = useState("masculin");
+  const [gender, setGender] = useState("male");
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080?file=dynamic4'); // Adresse du serveur WebSocket
+    const ws = new WebSocket('ws://localhost:8080?file=dynamic5'); // Adresse du serveur WebSocket
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);

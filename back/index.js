@@ -8,6 +8,7 @@ const CSV_FILES = {
     dynamic2: 'data/dynamic/csv/Test_2_brasse_5Hz_aller-retour_video.csv',
     dynamic3: 'data/dynamic/csv/Test_3_crawl_10Hz_aller-retour_video.csv',
     dynamic4: 'data/dynamic/csv/Test_4_crawl_5Hz_aller-retour_video.csv',
+    dynamic5: 'data/dynamic/csv/Test_5_merged_aller-retour_video.csv',
     static1: 'data/static/csv/Peri_piscine_2x26_30cm_30s_10hz.csv',
     static2: 'data/static/csv/Peri_piscine_4x26_30cm_30s_10hz.csv',
     static3: 'data/static/csv/Peri_piscine_18x26_30cm_30s_10hz.csv',

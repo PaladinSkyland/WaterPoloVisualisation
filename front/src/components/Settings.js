@@ -11,19 +11,19 @@ function Settings(props){
             <input
                 type="radio"
                 name="gender"
-                value="masculin"
-                id="masculin"
+                value="male"
+                id="male"
                 onChange={onOptionChange}
-                checked={props.gender === "masculin"}
+                checked={props.gender === "male"}
             />
         <label htmlFor="masculin">Masculin</label>
         <input
                 type="radio"
                 name="gender"
-                value="feminin"
-                id="feminin"
+                value="female"
+                id="female"
                 onChange={onOptionChange}
-                checked={props.gender === "feminin"}
+                checked={props.gender === "female"}
             />
         <label htmlFor="feminin">Feminin</label>
 

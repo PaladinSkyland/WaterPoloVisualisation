@@ -43,8 +43,8 @@ function Player(props) {
     
     return (
         <Group
-            x={player.y - size * 2}
-            y={player.x - size * 2}
+            x={player.x - size * 2}
+            y={player.y - size * 2}
             key={index}
             width={size * 4}
             height={size * 4}

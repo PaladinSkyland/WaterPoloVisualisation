@@ -1,16 +1,13 @@
 {
   "files": {
-    "main.css": "/WaterPoloVisualisation/static/css/main.f855e6bc.css",
-    "main.js": "/WaterPoloVisualisation/static/js/main.354dcb15.js",
-    "static/js/453.234f0f7c.chunk.js": "/WaterPoloVisualisation/static/js/453.234f0f7c.chunk.js",
-    "static/media/logo.svg": "/WaterPoloVisualisation/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/WaterPoloVisualisation/static/css/main.e66fbf0b.css",
+    "main.js": "/WaterPoloVisualisation/static/js/main.36ffc77e.js",
     "index.html": "/WaterPoloVisualisation/index.html",
-    "main.f855e6bc.css.map": "/WaterPoloVisualisation/static/css/main.f855e6bc.css.map",
-    "main.354dcb15.js.map": "/WaterPoloVisualisation/static/js/main.354dcb15.js.map",
-    "453.234f0f7c.chunk.js.map": "/WaterPoloVisualisation/static/js/453.234f0f7c.chunk.js.map"
+    "main.e66fbf0b.css.map": "/WaterPoloVisualisation/static/css/main.e66fbf0b.css.map",
+    "main.36ffc77e.js.map": "/WaterPoloVisualisation/static/js/main.36ffc77e.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.354dcb15.js"
+    "static/css/main.e66fbf0b.css",
+    "static/js/main.36ffc77e.js"
   ]
 }

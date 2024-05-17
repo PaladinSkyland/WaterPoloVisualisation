@@ -1,0 +1,2 @@
+*{margin:0}.pool-container{align-items:center;display:flex;flex-direction:column;height:100%;position:relative;width:100%}.title{font-size:2vw;font-weight:700;margin:2vw 0}.stage-container{height:35vw;width:70vw}.settings{background:#fff;border:1px solid #000;height:100vh;overflow:auto;position:fixed;right:0;top:0;transform:translateX(100%);transition:transform .3s ease-out;width:25%}.settings.show{transform:translateX(0)}
+/*# sourceMappingURL=main.e66fbf0b.css.map*/

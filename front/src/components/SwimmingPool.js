@@ -1,30 +1,76 @@
-import { useEffect } from 'react';
 import '../css/SwimmingPool.css'
+import { Stage, Layer, Rect } from 'react-konva';
+import React, { useEffect, useState, useRef } from 'react';
+import WaterpoloPoolLength from './WaterpoloPoolLength';
+import WaterpoloPoolWidth from './WaterpoloPoolWidth';
+import Player from './Player';
 
 function SwimmingPool(props){
+    const stageRef = useRef(null);
+    const containerRef = useRef(null);
+
+    const [dimensions, setDimensions] = useState({
+        width: props.pool.getPoolWidth(),
+        height: props.pool.getPoolHeight(),
+        scale: 1,
+    });
+    
+    
+    useEffect(() => {
+        const fitStageIntoParentContainer = () => {
+            if (containerRef.current) {
+                const containerWidth = containerRef.current.offsetWidth;
+                const scale = containerWidth / (props.pool.getPoolWidth());
+                setDimensions({
+                    width: props.pool.getPoolWidth() * scale,
+                    height: props.pool.getPoolHeight() * scale,
+                    scale,
+                });
+            }
+        };
+
+        fitStageIntoParentContainer();
+        window.addEventListener('resize', fitStageIntoParentContainer);
+    
+        return () => {window.removeEventListener('resize', fitStageIntoParentContainer)};
+    }, [props.pool]);
+    
     return(
         <div>
             <div className="pool-container">
                 <div className="title">
                     Visualisation des trajectoires de poloïstes
+                    
                 </div>
-                
-          <div className="swimming-pool" >
-                    <div className={'waterpolo-pool ' + props.gender} style={{ position: 'relative' }}>
-                    {/* Afficher les joueurs */}
-                    {props.pool.players.map((player, index) => (
-              <div
-                key={index}
-                className="player"
-                style={{
-                  left: (player.y / props.pool.width) * 100 + '%',
-                  top: (player.x / props.pool.height) * 100 + '%',
-                  transform: 'translate(-50%, -50%)', // Pour centrer le joueur
-                  position: 'absolute', // Position absolue par rapport à la piscine parente
-                }}
-              ></div>
-            ))}
-                    </div>
+                <div ref={containerRef} className="stage-container">
+                    <Stage
+                        width={dimensions.width}
+                        height={dimensions.height}
+                        scaleX={dimensions.scale}
+                        scaleY={dimensions.scale}
+                        ref={stageRef}
+                    >
+                        <Layer className="swimming-pool">
+                            <Rect
+                                x={0}
+                                y={0}
+                                width={props.pool.getPoolWidth()}
+                                height={props.pool.getPoolHeight()}
+                                fill="#6472ef"
+                                stroke="black"
+                                strokeWidth={0.2}
+                            />
+                        </Layer>
+                        <WaterpoloPoolLength gender={props.gender} yPos={0}></WaterpoloPoolLength>
+                        <WaterpoloPoolLength gender={props.gender} yPos={20.5}></WaterpoloPoolLength> 
+                        <WaterpoloPoolWidth gender={props.gender} xPos={5}> </WaterpoloPoolWidth>
+
+                        <Layer className="players">
+                            {props.pool.players.map((player, index) => (
+                                <Player player={player} index={index} key={index}/>
+                            ))}
+                        </Layer>
+                    </Stage>
                 </div>
             </div>
         </div>

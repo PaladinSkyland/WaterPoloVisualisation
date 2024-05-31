@@ -14,7 +14,7 @@ function App() {
     margeH: '',
     ancreV: '',
     ancreH: '',
-    gender: 'masculin'
+    gender: 'male'
   });
 
   useEffect(() => {

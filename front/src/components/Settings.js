@@ -14,15 +14,15 @@ function Settings({ settings, setSettings }) {
             newValue = maxLimit;
         }
 
-        setValues({
-            ...values,
+        setSettings({
+            ...settings,
             [name]: isNaN(newValue) ? 0 : newValue
         })
     }
 
     const handleGenderChange = e => {
-        setValues({
-            ...values,
+        setSettings({
+            ...settings,
             [e.target.name]: e.target.value
         });
     }
@@ -32,28 +32,28 @@ function Settings({ settings, setSettings }) {
         <Distance 
             label="MargeV" 
             name="margeV" 
-            value={values.margeV} 
+            value={settings.margeV} 
             handleChange={handleNumberChange} 
         />
         <Distance 
             label="MargeH" 
             name="margeH" 
-            value={values.margeH} 
+            value={settings.margeH} 
             handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreV" 
             name="ancreV" 
-            value={values.ancreV} 
+            value={settings.ancreV} 
             handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreH" 
             name="ancreH" 
-            value={values.ancreH} 
+            value={settings.ancreH} 
             handleChange={handleNumberChange} 
         />
-        <Gender value={values.gender} handleChange={handleGenderChange} />
+        <Gender value={settings.gender} handleChange={handleGenderChange} />
     </div>
   );
 }

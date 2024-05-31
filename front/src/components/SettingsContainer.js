@@ -2,7 +2,7 @@ import React from 'react';
 import Settings from './Settings';
 import '../css/SettingsContainer.css';
 
-function SettingsContainer({ values, setValues, showInputs, setShowInputs }) {
+function SettingsContainer({ settings, setSettings, showInputs, setShowInputs }) {
 
     const toggleInputs = () => {
         setShowInputs(!showInputs);
@@ -16,7 +16,7 @@ function SettingsContainer({ values, setValues, showInputs, setShowInputs }) {
       
             {showInputs && (
                 <div className={`settings ${showInputs ? 'show' : ''}`}>
-                    <Settings values={values} setValues={setValues} />
+                    <Settings settings={settings} setSettings={setSettings} />
                 </div>
             )}
         </div>

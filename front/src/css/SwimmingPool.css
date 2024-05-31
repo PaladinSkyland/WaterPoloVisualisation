@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100%;
     width: 100%
 }
@@ -14,6 +15,5 @@
 }
 
 .stage-container{
-    width: 70vw;
-    height: 35vw;
+    width: 90%;
 }

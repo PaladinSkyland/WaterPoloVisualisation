@@ -2,7 +2,7 @@ import React from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
 
-function Settings({ values, setValues }) {
+function Settings({ settings, setSettings }) {
 
     const maxLimit = 20;
 

@@ -50,8 +50,8 @@ function App() {
 
   return (
     <div className="App">
-      <SwimmingPool gender={values.gender} pool={pool}/>
-      <SettingsContainer values={values} setValues={setValues} showInputs={showInputs} setShowInputs={setShowInputs} />
+      <SwimmingPool pool={pool} settings={settings}/>
+      <SettingsContainer settings={settings} setSettings={setSettings} showInputs={showInputs} setShowInputs={setShowInputs} />
     </div>
   );
 }

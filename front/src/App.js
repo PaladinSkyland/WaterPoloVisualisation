@@ -9,12 +9,12 @@ function App() {
   const [pool, setPool] = useState(new Pool());
 
   const [showInputs, setShowInputs] = useState(false);
-  const [values, setValues] = useState({
-    margeV: '',
-    margeH: '',
-    ancreV: '',
-    ancreH: '',
-    gender: 'masculin'
+  const [settings, setSettings] = useState({
+    margeV: 0,
+    margeH: 0,
+    ancreV: 0,
+    ancreH: 0,
+    gender: 'male'
   });
 
   useEffect(() => {
@@ -42,8 +42,8 @@ function App() {
 
   return (
     <div className="App">
-      <SwimmingPool gender={values.gender} pool={pool}/>
-      <SettingsContainer values={values} setValues={setValues} showInputs={showInputs} setShowInputs={setShowInputs} />
+      <SwimmingPool pool={pool} settings={settings}/>
+      <SettingsContainer settings={settings} setSettings={setSettings} showInputs={showInputs} setShowInputs={setShowInputs} />
     </div>
   );
 }

@@ -2,12 +2,13 @@ import React from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
 
-function Settings({ values, setValues }) {
+function Settings({ settings, setSettings }) {
 
     const handleChange = e => {
-        setValues({
-            ...values,
-            [e.target.name]: e.target.value
+        const value = parseInt(e.target.value)
+        setSettings({
+            ...settings,
+            [e.target.name]: isNaN(value) ? 0 : value
         })
     }
     
@@ -16,28 +17,28 @@ function Settings({ values, setValues }) {
         <Distance 
             label="MargeV" 
             name="margeV" 
-            value={values.margeV} 
+            value={settings.margeV} 
             handleChange={handleChange} 
         />
         <Distance 
             label="MargeH" 
             name="margeH" 
-            value={values.margeH} 
+            value={settings.margeH} 
             handleChange={handleChange} 
         />
         <Distance
             label="AncreV" 
             name="ancreV" 
-            value={values.ancreV} 
+            value={settings.ancreV} 
             handleChange={handleChange} 
         />
         <Distance
             label="AncreH" 
             name="ancreH" 
-            value={values.ancreH} 
+            value={settings.ancreH} 
             handleChange={handleChange} 
         />
-        <Gender value={values.gender} handleChange={handleChange} />
+        <Gender value={settings.gender} handleChange={handleChange} />
     </div>
   );
 }

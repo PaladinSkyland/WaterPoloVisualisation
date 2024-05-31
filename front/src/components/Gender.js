@@ -5,21 +5,21 @@ function Gender({value, handleChange}){
             <input
                 type="radio"
                 name="gender"
-                value="masculin"
-                id="masculin"
+                value="male"
+                id="male"
                 onChange={handleChange}
-                checked={value === "masculin"}
+                checked={value === "male"}
             />
-        <label htmlFor="masculin">Masculin</label>
+        <label htmlFor="male">Masculin</label>
         <input
                 type="radio"
                 name="gender"
-                value="feminin"
-                id="feminin"
+                value="female"
+                id="female"
                 onChange={handleChange}
-                checked={value === "feminin"}
+                checked={value === "female"}
             />
-        <label htmlFor="feminin">Feminin</label>
+        <label htmlFor="female">Feminin</label>
 
         </div>
         

@@ -38,10 +38,6 @@ function SwimmingPool(props){
     return(
         <div>
             <div className="pool-container">
-                <div className="title">
-                    Visualisation des trajectoires de poloïstes
-                    
-                </div>
                 <div ref={containerRef} className="stage-container">
                     <Stage
                         width={dimensions.width}
@@ -61,9 +57,10 @@ function SwimmingPool(props){
                                 strokeWidth={0.2}
                             />
                         </Layer>
-                        <WaterpoloPoolLength gender={props.gender} yPos={0}></WaterpoloPoolLength>
-                        <WaterpoloPoolLength gender={props.gender} yPos={20.5}></WaterpoloPoolLength> 
-                        <WaterpoloPoolWidth gender={props.gender} xPos={5}> </WaterpoloPoolWidth>
+                        <WaterpoloPoolLength settings={props.settings} up={true}></WaterpoloPoolLength>
+                        <WaterpoloPoolLength settings={props.settings} ></WaterpoloPoolLength>
+                        <WaterpoloPoolWidth settings={props.settings} left={true}></WaterpoloPoolWidth>
+                        <WaterpoloPoolWidth settings={props.settings} ></WaterpoloPoolWidth>
 
                         <Layer className="players">
                             {props.pool.players.map((player, index) => (

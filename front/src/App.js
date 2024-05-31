@@ -9,7 +9,7 @@ function App() {
   const [pool, setPool] = useState(new Pool());
 
   const [showInputs, setShowInputs] = useState(false);
-  const [values, setValues] = useState(() => {
+  const [settings, setSettings] = useState(() => {
     const storedValues = localStorage.getItem('values');
     return storedValues ? JSON.parse(storedValues) : {
       margeV: 0,
@@ -21,8 +21,8 @@ function App() {
   });
 
   useEffect(() => {
-    localStorage.setItem('values', JSON.stringify(values));
-  }, [values]);
+    localStorage.setItem('settings', JSON.stringify(settings));
+  }, [settings]);
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8080?file=dynamic5'); // Adresse du serveur WebSocket

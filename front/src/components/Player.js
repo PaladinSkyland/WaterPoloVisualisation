@@ -3,7 +3,6 @@ import { Group, Circle, Text, Arrow } from 'react-konva';
 
 function Player(props) {
     const { player, index } = props;
-    player.speed = player.y;
     const size = 0.5;
 
     const getColorForValue = (value, minValue, maxValue) => {
@@ -83,6 +82,11 @@ function Player(props) {
                     rotation={90}
                 />
             }
+            <Text
+                text={player.speed.toFixed(2) + ' m/s'}
+                fontSize={size * 2}
+                fill="black"
+            />
         </Group>
     )
 

@@ -23,13 +23,13 @@ function App() {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.x && data.y) {
-        const { anchor, x, y, z, precision } = data;
+        const { anchor, x, y, z, precision, instant_speed } = data;
         setPool((currentPool) => {
           const newPool = Object.create(
             Object.getPrototypeOf(currentPool),
             Object.getOwnPropertyDescriptors(currentPool)
           );
-          newPool.movePlayerOrAdd(anchor, x, y, z, precision);
+          newPool.movePlayerOrAdd(anchor, x, y, z, precision, instant_speed);
           return newPool;
         });
       }

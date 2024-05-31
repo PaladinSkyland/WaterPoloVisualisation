@@ -1,6 +1,7 @@
 import React from 'react';
 
 function Distance({ label, name, value, handleChange }) {
+  
   return (
     <div>
       <label>

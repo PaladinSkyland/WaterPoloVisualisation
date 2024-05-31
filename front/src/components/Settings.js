@@ -4,11 +4,27 @@ import Gender from './Gender';
 
 function Settings({ values, setValues }) {
 
-    const handleChange = e => {
+    const maxLimit = 20;
+
+    const handleNumberChange = (event) => {
+        const { name, value } = event.target;
+        let newValue = parseFloat(value);
+
+        if (newValue > maxLimit) {
+            newValue = maxLimit;
+        }
+
+        setValues({
+            ...values,
+            [name]: isNaN(newValue) ? 0 : newValue
+        })
+    }
+
+    const handleGenderChange = e => {
         setValues({
             ...values,
             [e.target.name]: e.target.value
-        })
+        });
     }
     
   return (
@@ -17,27 +33,27 @@ function Settings({ values, setValues }) {
             label="MargeV" 
             name="margeV" 
             value={values.margeV} 
-            handleChange={handleChange} 
+            handleChange={handleNumberChange} 
         />
         <Distance 
             label="MargeH" 
             name="margeH" 
             value={values.margeH} 
-            handleChange={handleChange} 
+            handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreV" 
             name="ancreV" 
             value={values.ancreV} 
-            handleChange={handleChange} 
+            handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreH" 
             name="ancreH" 
             value={values.ancreH} 
-            handleChange={handleChange} 
+            handleChange={handleNumberChange} 
         />
-        <Gender value={values.gender} handleChange={handleChange} />
+        <Gender value={values.gender} handleChange={handleGenderChange} />
     </div>
   );
 }

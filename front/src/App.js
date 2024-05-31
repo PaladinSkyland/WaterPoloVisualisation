@@ -9,17 +9,24 @@ function App() {
   const [pool, setPool] = useState(new Pool());
 
   const [showInputs, setShowInputs] = useState(false);
-  const [values, setValues] = useState({
-    margeV: '',
-    margeH: '',
-    ancreV: '',
-    ancreH: '',
-    gender: 'male'
+  const [values, setValues] = useState(() => {
+    const storedValues = localStorage.getItem('values');
+    return storedValues ? JSON.parse(storedValues) : {
+      margeV: 0,
+      margeH: 0,
+      ancreV: 0,
+      ancreH: 0,
+      gender: 'male'
+    };
   });
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080?file=dynamic5'); // Adresse du serveur WebSocket
+    localStorage.setItem('values', JSON.stringify(values));
+  }, [values]);
 
+  useEffect(() => {
+    const ws = new WebSocket('ws://localhost:8080?file=dynamic5'); // Adresse du serveur WebSocket
+    
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.x && data.y) {
@@ -38,6 +45,7 @@ function App() {
     return () => {
       ws.close();
     };
+
   }, []);
 
   return (

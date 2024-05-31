@@ -4,12 +4,27 @@ import Gender from './Gender';
 
 function Settings({ settings, setSettings }) {
 
-    const handleChange = e => {
-        const value = parseInt(e.target.value)
-        setSettings({
-            ...settings,
-            [e.target.name]: isNaN(value) ? 0 : value
+    const maxLimit = 20;
+
+    const handleNumberChange = (event) => {
+        const { name, value } = event.target;
+        let newValue = parseFloat(value);
+
+        if (newValue > maxLimit) {
+            newValue = maxLimit;
+        }
+
+        setValues({
+            ...values,
+            [name]: isNaN(newValue) ? 0 : newValue
         })
+    }
+
+    const handleGenderChange = e => {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value
+        });
     }
     
   return (
@@ -17,28 +32,28 @@ function Settings({ settings, setSettings }) {
         <Distance 
             label="MargeV" 
             name="margeV" 
-            value={settings.margeV} 
-            handleChange={handleChange} 
+            value={values.margeV} 
+            handleChange={handleNumberChange} 
         />
         <Distance 
             label="MargeH" 
             name="margeH" 
-            value={settings.margeH} 
-            handleChange={handleChange} 
+            value={values.margeH} 
+            handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreV" 
             name="ancreV" 
-            value={settings.ancreV} 
-            handleChange={handleChange} 
+            value={values.ancreV} 
+            handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreH" 
             name="ancreH" 
-            value={settings.ancreH} 
-            handleChange={handleChange} 
+            value={values.ancreH} 
+            handleChange={handleNumberChange} 
         />
-        <Gender value={settings.gender} handleChange={handleChange} />
+        <Gender value={values.gender} handleChange={handleGenderChange} />
     </div>
   );
 }

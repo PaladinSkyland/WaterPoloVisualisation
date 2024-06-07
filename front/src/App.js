@@ -1,14 +1,14 @@
 import './css/App.css';
 import './components/SwimmingPool';
 import SwimmingPool from './components/SwimmingPool';
-import SettingsContainer from './components/SettingsContainer';
 import Pool from './class/Pool';
 import React, { useEffect, useState } from 'react';
+import NavBar from './components/NavBar';
+import Settings from './components/Settings';
 
 function App() {
   const [pool, setPool] = useState(new Pool());
 
-  const [showInputs, setShowInputs] = useState(false);
   const [settings, setSettings] = useState(() => {
     const storedValues = localStorage.getItem('settings');
     return storedValues ? JSON.parse(storedValues) : {
@@ -20,6 +20,21 @@ function App() {
       zone: 'pool',
     };
   });
+
+  const [activeTab, setActiveTab] = useState('home');
+
+  let content = 'home';
+  switch (activeTab) {
+    case 'home':
+      content = <SwimmingPool pool={pool} settings={settings}/>;
+      break;
+    case 'settings':
+      content = <Settings settings={settings} setSettings={setSettings} />;
+      break;
+    default:
+      content = 'home';
+      break;
+  }
 
   useEffect(() => {
     localStorage.setItem('settings', JSON.stringify(settings));
@@ -51,8 +66,10 @@ function App() {
 
   return (
     <div className="App">
-      <SwimmingPool pool={pool} settings={settings}/>
-      <SettingsContainer settings={settings} setSettings={setSettings} showInputs={showInputs} setShowInputs={setShowInputs} />
+      <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
+      <div className="content">
+        {content}
+      </div>
     </div>
   );
 }

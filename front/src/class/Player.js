@@ -6,6 +6,7 @@ class Player {
       this.y = y;
       this.z = z;
       this.precision = precision;
+      this.selected = false;
     }
 }
 export default Player;

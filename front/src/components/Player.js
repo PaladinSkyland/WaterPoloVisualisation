@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Group, Circle, Text, Arrow, Arc, Line } from 'react-konva';
+import { Group, Circle, Text, Arrow, Arc } from 'react-konva';
 import { Animation } from 'konva';
 
 function Player(props) {
@@ -20,7 +20,7 @@ function Player(props) {
             duration: player.time - time,
         });
         setTime(player.time);
-    }, [player.time, player.x, player.y, time]);
+    }, [playerRef, player.time, player.x, player.y, time]);
 
     useEffect(() => {
         if (spinnerRef.current === null) return;
@@ -36,7 +36,7 @@ function Player(props) {
         return () => {
           animation.stop();
         };
-      }, [spinnerRef.current]);
+      }, [player.selected]);
     
     const getColorForValue = (value, minValue, maxValue) => {
         const normalizedValue = Math.min(Math.max(value / maxValue, minValue), 1);

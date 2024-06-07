@@ -64,17 +64,32 @@ function App() {
 
   }, []);
 
+  const [isLandscape, setIsLandscape] = useState(window.matchMedia("(orientation: landscape)").matches);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(orientation: landscape)");
+    const handleOrientationChange = (e) => setIsLandscape(e.matches);
+    mediaQuery.addEventListener('change', handleOrientationChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleOrientationChange);
+    };
+  }, []);
+
   return (
     <div className="App">
-      <div className="landscape">
-        <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
-        <div className="content">
-          {content}
+      {isLandscape ? (
+        <div>
+          <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
+          <div className="content">
+            {content}
+          </div>
         </div>
-      </div>
-      <div className="portrait">
-        Cette application ne fonctionne qu'en mode paysage :-(
-      </div>
+      ) : (
+        <div className='portrait'>
+          Cette application ne fonctionne qu'en mode paysage :-(
+        </div>
+      )}
     </div>
   );
 }

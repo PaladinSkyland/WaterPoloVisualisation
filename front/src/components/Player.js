@@ -13,12 +13,17 @@ function Player(props) {
     useEffect(() => {
         if (playerRef.current === null) return;
         if (player.time === time) return;
-        if (time === 0) setTime(player.time);
-        playerRef.current.to({
-            x: player.x,
-            y: player.y,
-            duration: player.time - time,
-        });
+        if (time === 0) {
+            playerRef.current.x(player.x);
+            playerRef.current.y(player.y);
+        }
+        else {
+            playerRef.current.to({
+                x: player.x,
+                y: player.y,
+                duration: player.time - time,
+            });
+        };
         setTime(player.time);
     }, [playerRef, player.time, player.x, player.y, time]);
 
@@ -123,7 +128,7 @@ function Player(props) {
                 height={fontSize * 4}
                 width={fontSize * 4}
                 wrap='none'
-                rotation={-playerRef.current?.getStage()?.rotation()}
+                rotation={-playerRef.current?.getStage()?.rotation() || 0}
                 offsetX={fontSize * 2}
                 offsetY={fontSize * 2}
                 className="player"

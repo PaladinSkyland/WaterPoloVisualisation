@@ -59,7 +59,7 @@ function PlayerLink(props) {
                 y={(y1 + y2) / 2}
                 offsetX={1.8 * fontSize}
                 offsetY={0.8 * fontSize}
-                rotation={-textRef.current?.getStage()?.rotation()}
+                rotation={-textRef.current?.getStage()?.rotation() || 0}
                 >
                 <Text
                     text={d.toFixed(2) + 'm'}

@@ -23,7 +23,6 @@ function SwimmingPool(props){
     
     const arrLength = props.pool.players.length;
     const playersRef = useRef([]);
-    const [playersLinks, setPlayersLinks] = useState([]);
 
     if (playersRef.current.length !== arrLength) {
       playersRef.current = Array(arrLength).fill().map((_, i) => playersRef.current[i] || createRef());
@@ -114,11 +113,11 @@ function SwimmingPool(props){
     }
 
     const addLink = (player1, player2) => {
-        if (playersLinks.some(link => (link.player1 === player1 && link.player2 === player2) || (link.player1 === player2 && link.player2 === player1))) {
-            setPlayersLinks(playersLinks.filter(link => (link.player1 !== player1 || link.player2 !== player2) && (link.player1 !== player2 || link.player2 !== player1)));
+        if (props.pool.playersLinks.some(link => (link.player1 === player1 && link.player2 === player2) || (link.player1 === player2 && link.player2 === player1))) {
+            props.pool.playersLinks = props.pool.playersLinks.filter(link => (link.player1 !== player1 || link.player2 !== player2) && (link.player1 !== player2 || link.player2 !== player1));
         }
         else {
-            setPlayersLinks([...playersLinks, { player1: player1, player2: player2 }]);
+            props.pool.playersLinks.push({ player1: player1, player2: player2 });
         }
     }
 
@@ -166,7 +165,7 @@ function SwimmingPool(props){
                             {props.pool.players.some(player => player.selected) && (
                                 <PlayerLink player1={playersRef.current[props.pool.players.findIndex(player => player.selected)]} player2={mousePos} fontSize={dimensions.fontSize} />
                             )}
-                            {playersLinks.map((link) => (
+                            {props.pool.playersLinks.map((link) => (
                                     <PlayerLink player1={playersRef.current[link.player1]} player2={playersRef.current[link.player2]} key={link.player1 + '-' + link.player2} fontSize={dimensions.fontSize} />
                                 )
                             )}

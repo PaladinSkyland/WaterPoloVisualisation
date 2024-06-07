@@ -2,9 +2,17 @@ import Player from './Player';
 
 class WaterPoloField {
     constructor() {
-        this.sex = 'male';
-        this.width = (this.sex === 'male') ? 30 : 25; // Largeur du bassin en mètres
+        this.male_width = 30;
+        this.female_width = 25;
         this.height = 20;
+    }
+
+    getWidth = (gender) => {
+        return gender === 'female' ? this.female_width : this.male_width;
+    }
+
+    getHeight = () => {
+        return this.height;
     }
 }
 
@@ -29,10 +37,10 @@ class Pool {
         return this.width;
     }
     getWaterpoloPoolHeight = () => {
-        return this.waterPoloField.height;
+        return this.waterPoloField.getHeight();
     }
-    getWaterpoloPoolWidth = () => {
-        return this.waterPoloField.width;
+    getWaterpoloPoolWidth = (gender) => {
+        return this.waterPoloField.getWidth(gender);
     }
     addPlayer(player) {
         this.players.push(player);
@@ -42,15 +50,16 @@ class Pool {
         this.players = this.players.filter(player => player.tag !== tag);
     }
 
-    movePlayerOrAdd(tag, x, y, z, precision) {
+    movePlayerOrAdd(time, tag, x, y, z, precision) {
         x += this.origine_coord_x;
         y += this.origine_coord_y;
         let player = this.players.find(player => player.tag === tag);
         if (!player) {
-            let newplayer = new Player(tag, x, y, z, precision);
+            let newplayer = new Player(time, tag, x, y, z, precision);
             this.addPlayer(newplayer);
         }
         if (player) {
+            player.time = time;
             player.x = x;
             player.y = y;
             player.z = z;

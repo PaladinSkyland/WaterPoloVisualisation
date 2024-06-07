@@ -16,7 +16,8 @@ function App() {
       margeH: 0,
       ancreV: 0,
       ancreH: 0,
-      gender: 'male'
+      gender: 'male',
+      zone: 'pool',
     };
   });
 
@@ -30,13 +31,13 @@ function App() {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.x && data.y) {
-        const { anchor, x, y, z, precision } = data;
+        const { time, anchor, x, y, z, precision } = data;
         setPool((currentPool) => {
           const newPool = Object.create(
             Object.getPrototypeOf(currentPool),
             Object.getOwnPropertyDescriptors(currentPool)
           );
-          newPool.movePlayerOrAdd(anchor, x, y, z, precision);
+          newPool.movePlayerOrAdd(time, anchor, x, y, z, precision);
           return newPool;
         });
       }

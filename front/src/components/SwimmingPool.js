@@ -13,6 +13,9 @@ function SwimmingPool(props){
         width: props.pool.getPoolWidth(),
         height: props.pool.getPoolHeight(),
         scale: 1,
+        offsetX: 0,
+        offsetY: 0,
+        rotation: 0
     });
     
     
@@ -20,12 +23,61 @@ function SwimmingPool(props){
         const fitStageIntoParentContainer = () => {
             if (containerRef.current) {
                 const containerWidth = containerRef.current.offsetWidth;
-                const scale = containerWidth / (props.pool.getPoolWidth());
-                setDimensions({
-                    width: props.pool.getPoolWidth() * scale,
-                    height: props.pool.getPoolHeight() * scale,
-                    scale,
-                });
+                const containerHeight = containerRef.current.offsetHeight;
+                if (props.settings.zone === 'waterpolo') {
+                    const scaleX = containerWidth / (props.pool.getWaterpoloPoolWidth(props.settings.gender) + 3.5);
+                    const scaleY = containerHeight / (props.pool.getWaterpoloPoolHeight() + 1);
+                    const scale = Math.min(scaleX, scaleY);
+                    setDimensions({
+                        width: (props.pool.getWaterpoloPoolWidth(props.settings.gender) + 3.5) * scale,
+                        height: (props.pool.getWaterpoloPoolHeight() + 1) * scale,
+                        scale: scale,
+                        offsetX: (1.75 - props.settings.margeH) * scale,
+                        offsetY: -props.settings.margeV * scale,
+                        rotation: 0
+                    });
+                }
+                else if (props.settings.zone === 'right') {
+                    const scaleX = containerWidth / (props.pool.getWaterpoloPoolHeight() + 1);
+                    const scaleY = containerHeight / (props.pool.getWaterpoloPoolWidth(props.settings.gender) * 0.35);
+                    const scale = Math.min(scaleX, scaleY);
+                    const heightPercent = containerHeight / (scale * props.pool.getWaterpoloPoolWidth(props.settings.gender));
+                    setDimensions({
+                        width: (props.pool.getWaterpoloPoolHeight() + 1) * scale,
+                        height: props.pool.getWaterpoloPoolWidth(props.settings.gender) * heightPercent * scale,
+                        scale: scale,
+                        offsetX: (1 + props.settings.margeV + props.pool.getWaterpoloPoolHeight()) * scale,
+                        offsetY: -(1.75 + props.settings.margeH + props.pool.getWaterpoloPoolWidth(props.settings.gender) * (1 - heightPercent)) * scale,
+                        rotation: 90
+                    });
+                }
+                else if (props.settings.zone === 'left') {
+                    const scaleX = containerWidth / (props.pool.getWaterpoloPoolHeight() + 1);
+                    const scaleY = containerHeight / (props.pool.getWaterpoloPoolWidth(props.settings.gender) * 0.35);
+                    const scale = Math.min(scaleX, scaleY);
+                    const heightPercent = containerHeight / (scale * props.pool.getWaterpoloPoolWidth(props.settings.gender));
+                    setDimensions({
+                        width: (props.pool.getWaterpoloPoolHeight() + 1) * scale,
+                        height: props.pool.getWaterpoloPoolWidth(props.settings.gender) * heightPercent * scale,
+                        scale: scale,
+                        offsetX: (1 + props.settings.margeV + props.pool.getWaterpoloPoolHeight()) * scale,
+                        offsetY: (1.75 - props.settings.margeH) * scale,
+                        rotation: 90
+                    });
+                }
+                else {
+                    const scaleX = containerWidth / (props.pool.getPoolWidth());
+                    const scaleY = containerHeight / (props.pool.getPoolHeight());
+                    const scale = Math.min(scaleX, scaleY);
+                    setDimensions({
+                        width: props.pool.getPoolWidth() * scale,
+                        height: props.pool.getPoolHeight() * scale,
+                        scale: scale,
+                        offsetX: 0,
+                        offsetY: 0,
+                        rotation: 0
+                    });
+                }
             }
         };
 
@@ -40,10 +92,13 @@ function SwimmingPool(props){
             <div className="pool-container">
                 <div ref={containerRef} className="stage-container">
                     <Stage
+                        x={dimensions.offsetX}
+                        y={dimensions.offsetY}
                         width={dimensions.width}
                         height={dimensions.height}
                         scaleX={dimensions.scale}
                         scaleY={dimensions.scale}
+                        rotation={dimensions.rotation}
                         ref={stageRef}
                     >
                         <Layer className="swimming-pool">
@@ -64,7 +119,7 @@ function SwimmingPool(props){
 
                         <Layer className="players">
                             {props.pool.players.map((player, index) => (
-                                <Player player={player} index={index} key={index}/>
+                                <Player player={player} index={index} key={index} rotation={dimensions.rotation}/>
                             ))}
                         </Layer>
                     </Stage>

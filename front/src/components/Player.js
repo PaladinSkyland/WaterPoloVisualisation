@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Group, Circle, Text, Arrow } from 'react-konva';
 
 function Player(props) {
     const { player, index } = props;
     player.speed = player.y;
     const size = 0.5;
+    let [time, setTime] = useState(0);
+
+    const playerRef = useRef(null);
+
+    useEffect(() => {
+        if (playerRef.current === null) return;
+        if (player.time === time) return;
+        if (time === 0) setTime(player.time);
+        playerRef.current.to({
+            x: player.x - size * 2,
+            y: player.y - size * 2,
+            duration: player.time - time,
+        });
+        setTime(player.time);
+    }, [player.time, player.x, player.y, time]);
 
     const getColorForValue = (value, minValue, maxValue) => {
         const normalizedValue = Math.min(Math.max(value / maxValue, minValue), 1);
@@ -42,8 +57,9 @@ function Player(props) {
     
     return (
         <Group
-            x={player.x - size * 2}
-            y={player.y - size * 2}
+            ref={playerRef}
+            x={0}
+            y={0}
             key={index}
             width={size * 4}
             height={size * 4}
@@ -55,6 +71,8 @@ function Player(props) {
                 fill="red"
             />
             <Text
+                x={size * 2}
+                y={size * 2}
                 text={'P' + (index + 1)}
                 fontSize={size}
                 fill="white"
@@ -63,6 +81,9 @@ function Player(props) {
                 height={size * 4}
                 width={size * 4}
                 wrap='none'
+                rotation={-props.rotation}
+                offsetX={size * 2}
+                offsetY={size * 2}
             />
             <Circle
                 x={size * 2}
@@ -70,17 +91,16 @@ function Player(props) {
                 radius={size}
                 stroke={getColorForValue(player.speed, 0, 20)}
                 strokeWidth={0.1}
-                zIndex={0}
             />
             {player.speed > 5 && 
                 <Arrow
-                    x={size * 3}
+                    x={size * 2}
                     y={size * 2}
-                    points={[0, 0, 0, -size]}
+                    points={[0, 0, size * 2, 0]}
                     pointerLength={size}
                     pointerWidth={size}
                     fill={getColorForValue(player.speed, 0, 20)}
-                    rotation={90}
+                    rotation={player.speed * 100}
                 />
             }
         </Group>

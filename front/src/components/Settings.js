@@ -1,6 +1,7 @@
 import React from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
+import Zone from './Zone';
 
 function Settings({ settings, setSettings }) {
 
@@ -20,7 +21,7 @@ function Settings({ settings, setSettings }) {
         })
     }
 
-    const handleGenderChange = e => {
+    const handleValueChange = e => {
         setSettings({
             ...settings,
             [e.target.name]: e.target.value
@@ -53,7 +54,8 @@ function Settings({ settings, setSettings }) {
             value={settings.ancreH} 
             handleChange={handleNumberChange} 
         />
-        <Gender value={settings.gender} handleChange={handleGenderChange} />
+        <Gender value={settings.gender} handleChange={handleValueChange} />
+        <Zone value={settings.zone} handleChange={handleValueChange} />
     </div>
   );
 }

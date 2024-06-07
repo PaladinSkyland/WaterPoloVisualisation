@@ -85,7 +85,7 @@ function SwimmingPool(props){
         window.addEventListener('resize', fitStageIntoParentContainer);
     
         return () => {window.removeEventListener('resize', fitStageIntoParentContainer)};
-    }, [props.pool]);
+    }, [props.pool, props.settings]);
     
     return(
         <div>

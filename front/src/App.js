@@ -10,7 +10,7 @@ function App() {
 
   const [showInputs, setShowInputs] = useState(false);
   const [settings, setSettings] = useState(() => {
-    const storedValues = localStorage.getItem('values');
+    const storedValues = localStorage.getItem('settings');
     return storedValues ? JSON.parse(storedValues) : {
       margeV: 0,
       margeH: 2,

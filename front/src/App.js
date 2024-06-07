@@ -66,9 +66,14 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
-      <div className="content">
-        {content}
+      <div className="landscape">
+        <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <div className="content">
+          {content}
+        </div>
+      </div>
+      <div className="portrait">
+        Cette application ne fonctionne qu'en mode paysage :-(
       </div>
     </div>
   );

@@ -1,3 +1,22 @@
+@media screen and (orientation:portrait) {
+    .landscape {
+        display: none;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    .portrait {
+        display: none;
+    }
+}
+
+.portrait {
+    height: 100dvh;
+    width: 100%;
+    text-align: center;
+    line-height: 100dvh;
+}
+
 .content {
     margin-left: 5%;
 }

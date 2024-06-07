@@ -1,0 +1,17 @@
+.NavBar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 5%;
+  height: 100%;
+  overflow: auto;
+  background-color: #9994DB ;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.NavBar button {
+  margin-bottom: 10px;
+}

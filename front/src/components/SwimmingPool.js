@@ -112,10 +112,12 @@ function SwimmingPool(props){
                                 strokeWidth={0.2}
                             />
                         </Layer>
+                        <Layer className="waterpolo-pool">
                         <WaterpoloPoolLength settings={props.settings} up={true}></WaterpoloPoolLength>
                         <WaterpoloPoolLength settings={props.settings} ></WaterpoloPoolLength>
                         <WaterpoloPoolWidth settings={props.settings} left={true}></WaterpoloPoolWidth>
                         <WaterpoloPoolWidth settings={props.settings} ></WaterpoloPoolWidth>
+                        </Layer>
 
                         <Layer className="players">
                             {props.pool.players.map((player, index) => (

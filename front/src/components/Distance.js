@@ -11,7 +11,6 @@ function Distance({ label, name, value, handleChange }) {
           name={name} 
           value={value}
           min={0}
-          max={20}
           onChange={handleChange} 
         />
       </label>

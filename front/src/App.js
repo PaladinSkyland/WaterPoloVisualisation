@@ -9,20 +9,21 @@ function App() {
   const [pool, setPool] = useState(new Pool());
 
   const [showInputs, setShowInputs] = useState(false);
-  const [values, setValues] = useState(() => {
+  const [settings, setSettings] = useState(() => {
     const storedValues = localStorage.getItem('values');
     return storedValues ? JSON.parse(storedValues) : {
       margeV: 0,
-      margeH: 0,
+      margeH: 2,
       ancreV: 0,
       ancreH: 0,
-      gender: 'male'
+      gender: 'male',
+      zone: 'pool',
     };
   });
 
   useEffect(() => {
-    localStorage.setItem('values', JSON.stringify(values));
-  }, [values]);
+    localStorage.setItem('settings', JSON.stringify(settings));
+  }, [settings]);
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8080?file=dynamic5'); // Adresse du serveur WebSocket
@@ -30,12 +31,18 @@ function App() {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.x && data.y) {
-        const { anchor, x, y, z, precision } = data;
-        pool.movePlayerOrAdd(anchor, x, y, z, precision);
+        const { time, anchor, x, y, z, precision } = data;
+        setPool((currentPool) => {
+          const newPool = Object.create(
+            Object.getPrototypeOf(currentPool),
+            Object.getOwnPropertyDescriptors(currentPool)
+          );
+          newPool.movePlayerOrAdd(time, anchor, x, y, z, precision);
+          return newPool;
+        });
       }
-      setPool({ ...pool });
     };
-
+  
     return () => {
       ws.close();
     };
@@ -44,8 +51,8 @@ function App() {
 
   return (
     <div className="App">
-      <SwimmingPool gender={values.gender} pool={pool}/>
-      <SettingsContainer values={values} setValues={setValues} showInputs={showInputs} setShowInputs={setShowInputs} />
+      <SwimmingPool pool={pool} settings={settings}/>
+      <SettingsContainer settings={settings} setSettings={setSettings} showInputs={showInputs} setShowInputs={setShowInputs} />
     </div>
   );
 }

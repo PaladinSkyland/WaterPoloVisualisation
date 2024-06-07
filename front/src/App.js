@@ -13,7 +13,7 @@ function App() {
     const storedValues = localStorage.getItem('values');
     return storedValues ? JSON.parse(storedValues) : {
       margeV: 0,
-      margeH: 0,
+      margeH: 2,
       ancreV: 0,
       ancreH: 0,
       gender: 'male',

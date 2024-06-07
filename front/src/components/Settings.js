@@ -5,14 +5,22 @@ import Zone from './Zone';
 
 function Settings({ settings, setSettings }) {
 
-    const maxLimit = 20;
+    const maxHorizontalLimit = settings.gender === "male" ? 18 : 23
+    const minHorizontalLimit = 2
+    const maxVerticalLimit = 4
 
     const handleNumberChange = (event) => {
         const { name, value } = event.target;
         let newValue = parseFloat(value);
 
-        if (newValue > maxLimit) {
-            newValue = maxLimit;
+        if (name === "margeH" && newValue > maxHorizontalLimit) {
+            newValue = maxHorizontalLimit;
+        }
+        else if (name === "margeH" && newValue < minHorizontalLimit) {
+            newValue = minHorizontalLimit;
+        }
+        else if (name === "margeV" && newValue > maxVerticalLimit) {
+            newValue = maxVerticalLimit;
         }
 
         setSettings({

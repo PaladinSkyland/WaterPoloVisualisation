@@ -120,14 +120,14 @@ function App() {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
           <div className="content">
             {content}
+            <input
+          type="range"
+          min={mintime}
+          max={maxtime}
+          value={progress}
+          onChange={handleChangeProgress}
+          />
           </div>
-          <input
-        type="range"
-        min={mintime}
-        max={maxtime}
-        value={progress}
-        onChange={handleChangeProgress}
-        />
         </div>
       ) : (
         <div className='portrait'>

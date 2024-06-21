@@ -28,6 +28,7 @@ class Pool {
         this.origine_coord_y = -0.5;
 
         this.players = [];
+        this.playersLinks = [];
     }
 
     getPoolHeight = () => {

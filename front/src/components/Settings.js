@@ -76,12 +76,17 @@ function Settings({ pool, settings, setSettings }) {
                         handleChange={handleNumberChange}
                     />
                 </div>
+                
             </div>
+            <div className='gender-container'>
+                <Gender value={settings.gender} handleChange={handleValueChange} />
+            </div>
+            
 
-
-            <Gender value={settings.gender} handleChange={handleValueChange} />
+            
             <Zone value={settings.zone} handleChange={handleValueChange} />
             <SwimmingPool className="settings" pool={pool} settings={settings} />
+            
         </div>
     );
 }

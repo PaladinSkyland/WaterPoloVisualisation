@@ -7,6 +7,8 @@ import NavBar from './components/NavBar';
 import Settings from './components/Settings';
 
 function App() {
+  const address = 'ws://localhost:8080?file=dynamic5';
+
   const [pool, setPool] = useState(new Pool());
   const [settings, setSettings] = useState(() => {
     const storedValues = localStorage.getItem('settings');
@@ -31,6 +33,11 @@ useEffect(() => {
 
   const [activeTab, setActiveTab] = useState('pool');
 
+  const [progress, setProgress] = useState(0);
+  const [[mintime,maxtime], setMinMaxTime] = useState([0,100]);
+  //const [data, setData] = useState(null);
+  const [ws, setWs] = useState(null);
+
   let content
   switch (activeTab) {
     case 'pool':
@@ -52,10 +59,18 @@ useEffect(() => {
   }, [settings]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080?file=dynamic5'); // Adresse du serveur WebSocket
+    const newWs = new WebSocket(address); // Adresse du serveur WebSocket
+    setWs(newWs);
     
-    ws.onmessage = (event) => {
+    newWs.addEventListener('open', () => {
+      newWs.send(JSON.stringify({ timestamp: 0}));
+    });
+
+    newWs.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      if (data.TimeData) {
+        setMinMaxTime([data.TimeData.firstTime / 1000, data.TimeData.lastTime / 1000]);
+      }
       if (data.x && data.y) {
         const { time, anchor, x, y, z, precision } = data;
         setPool((currentPool) => {
@@ -70,7 +85,7 @@ useEffect(() => {
     };
   
     return () => {
-      ws.close();
+      newWs.close();
     };
 
   }, []);
@@ -87,6 +102,25 @@ useEffect(() => {
     };
   }, []);
 
+    useEffect(() => {
+    const interval = setInterval(() => {
+      if (progress < maxtime) {
+        setProgress(progress + 1);
+        console.log(progress);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [progress, maxtime, ws]);
+  
+
+  const handleChangeProgress = (event) => {
+    ws.send(JSON.stringify({ timestamp: parseFloat(event.target.value)}));
+    setProgress(parseInt(event.target.value));
+  };
+
   return (
     <div className="App">
       {isLandscape ? (
@@ -94,6 +128,13 @@ useEffect(() => {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
           <div className="content">
             {content}
+            <input
+          type="range"
+          min={mintime}
+          max={maxtime}
+          value={progress}
+          onChange={handleChangeProgress}
+          />
           </div>
         </div>
       ) : (

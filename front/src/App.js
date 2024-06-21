@@ -27,6 +27,10 @@ function App() {
   useEffect(() => {
     const newWs = new WebSocket(address); // Adresse du serveur WebSocket
     setWs(newWs);
+    
+    newWs.addEventListener('open', () => {
+      newWs.send(JSON.stringify({ timestamp: 0}));
+    });
 
     newWs.onmessage = (event) => {
       const data = JSON.parse(event.data);

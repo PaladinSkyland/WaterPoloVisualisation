@@ -29,9 +29,9 @@ wss.on('connection', (ws, request) => {
     ws.on('message', (message) => {
         console.log(`message from ws client: ${message}`);
         data = JSON.parse(message);
-        if (data.timestamp) {
+        if (data.timestamp !== undefined || data.timestamp !== null) {
             //sendPosForTimestamp(ws, file, data.timestamp);
-            console.log(data.timestamp);
+            //console.log(data.timestamp);
             currentStream = Math.random().toString(16);
             sendCSVstartTimestamp(ws, file, data.timestamp, currentStream);
         }
@@ -53,7 +53,7 @@ wss.on('connection', (ws, request) => {
     
         for await (const row of parser) {
             if (currentStream !== id) {
-                console.log(currentStream, id);
+                //console.log(currentStream, id);
                 return;
             }
             const rowTimestamp = Number(+row['temps_ms'].replace(/\u202F/g, '')) / 1000;

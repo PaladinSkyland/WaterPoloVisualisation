@@ -17,9 +17,9 @@ const CSV_FILES = {
 const wss = new WebSocket.Server({ port: WS_PORT });
 console.log(`ws server running on port ${WS_PORT}`);
 
-let currentTimeout = null;
 
 wss.on('connection', (ws, request) => {
+    let currentStream = null;
     console.log('new ws client');
     let options = new URL(`http://localhost${request.url}`).searchParams;
     let file = CSV_FILES[options.get('file')] ?? CSV_FILES.dynamic1;
@@ -30,13 +30,10 @@ wss.on('connection', (ws, request) => {
         console.log(`message from ws client: ${message}`);
         data = JSON.parse(message);
         if (data.timestamp) {
-            if (currentTimeout) {
-                clearTimeout(currentTimeout);
-                currentTimeout = null;
-            }
             //sendPosForTimestamp(ws, file, data.timestamp);
             console.log(data.timestamp);
-            sendCSVstartTimestamp(ws, file, data.timestamp);
+            currentStream = Math.random().toString(16);
+            sendCSVstartTimestamp(ws, file, data.timestamp, currentStream);
         }
     });
 
@@ -47,6 +44,44 @@ wss.on('connection', (ws, request) => {
     ws.on('close', (code, reason) => {
         console.log(`ws client closed with code ${code}: ${reason}`);
     });
+
+    async function sendCSVstartTimestamp(ws, file, startTimestamp, id) {
+        const parser = fs.createReadStream(file)
+        .pipe(parse({ delimiter: ";", columns: true }))
+    
+        let shouldStartSending = false;
+    
+        for await (const row of parser) {
+            if (currentStream !== id) {
+                console.log(currentStream, id);
+                return;
+            }
+            const rowTimestamp = Number(+row['temps_ms'].replace(/\u202F/g, '')) / 1000;
+            if (!shouldStartSending) {
+                //const rowTimestamp = +row['temps_ms'];
+                if (rowTimestamp >= startTimestamp) {
+                    shouldStartSending = true;
+                } else {
+                    continue;
+                }
+            }
+    
+            const data = {
+                time: rowTimestamp,
+                anchor: row['Ancre'],
+                x: +row['X'],
+                y: +row['Y'],
+                z: +row['Z'],
+                precision: +row['Precision %']
+            }
+    
+            ws.send(JSON.stringify(data));
+    
+            await delay(row['Temps_acquisition']);
+        }
+        currentStream = Math.random().toString(16);
+        sendCSVstartTimestamp(ws, file, startTimestamp, currentStream);
+    }
 });
 
 wss.on('error', (err) => {
@@ -58,42 +93,10 @@ wss.on('close', () => {
 });
 
 function delay(ms) {
-    return new Promise(resolve => currentTimeout = setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function sendCSVstartTimestamp(ws, file, startTimestamp) {
-    const parser = fs.createReadStream(file)
-    .pipe(parse({ delimiter: ";", columns: true }))
 
-    let shouldStartSending = false;
-
-    for await (const row of parser) {
-        const rowTimestamp = Number(+row['temps_ms'].replace(/\u202F/g, '')) / 1000;
-        if (!shouldStartSending) {
-            //const rowTimestamp = +row['temps_ms'];
-            if (rowTimestamp >= startTimestamp) {
-                shouldStartSending = true;
-            } else {
-                continue;
-            }
-        }
-
-        const data = {
-            time: rowTimestamp,
-            anchor: row['Ancre'],
-            x: +row['X'],
-            y: +row['Y'],
-            z: +row['Z'],
-            precision: +row['Precision %']
-        }
-
-        ws.send(JSON.stringify(data));
-
-        await delay(row['Temps_acquisition']);
-    }
-
-    await sendCSVstartTimestamp(ws, file, startTimestamp);
-}
 
 /*
 async function sendCSV(ws, file) {

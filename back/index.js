@@ -45,6 +45,7 @@ wss.on('close', () => {
     console.log('ws server closed');
 });
 
+//store previous data for each anchor
 const previousData = {};
 
 async function sendCSV(ws, file) {
@@ -54,23 +55,45 @@ async function sendCSV(ws, file) {
     for await (const row of parser) {
         await new Promise((resolve) => setTimeout(resolve, row['Temps_acquisition']));
 
+        //get current position
         let anchor = row['Ancre'];
         let currentX = parseFloat(row['X']);
         let currentY = parseFloat(row['Y']);
         let currentTime = parseFloat(row['temps_ms'].replace(/\s/g, '') / 1000);
 
+        //check if the current data is valid
+        if (isNaN(currentX) || isNaN(currentY) || isNaN(currentTime)) {
+            continue;
+        }
+
         let speed = 0;
 
         if (!isNaN(currentX) && !isNaN(currentY) && !isNaN(currentTime)) {
+            //check if there is previous valid data for this anchor
             if (previousData[anchor]) {
+                //calculate speed
                 let distance = Math.sqrt(Math.pow(currentX - previousData[anchor].x, 2) + Math.pow(currentY - previousData[anchor].y, 2));
                 let timeDifference = currentTime - previousData[anchor].time;
 
+                //ensure that the time difference is valid
                 if (timeDifference > 0) {
                     speed = distance / timeDifference;
                 }
+                else {
+                    console.log(`Invalid time difference for anchor ${anchor} at time ${currentTime} : ${timeDifference}`);
+                }
+
+                //debug
+                if (speed > 5) {
+                    console.log(`Anchor: ${anchor}`)
+                    console.log(`Current: (${currentX}, ${currentY}) at ${currentTime}`);
+                    console.log(`Previous: (${previousData[anchor].x}, ${previousData[anchor].y}) at ${previousData[anchor].time}`);
+                    console.log(`Distance: ${distance}, Time difference: ${timeDifference}`);
+                    console.log(`Speed: ${speed}`);
+                }
             }
 
+            //store current data for the next iteration
             previousData[anchor] = {
                 x: currentX,
                 y: currentY,
@@ -85,7 +108,7 @@ async function sendCSV(ws, file) {
             y: +row['Y'],
             z: +row['Z'],
             precision: +row['Precision %'],
-            instant_speed: speed
+            instant_speed: parseFloat(speed)
         };
         
         ws.send(JSON.stringify(data));

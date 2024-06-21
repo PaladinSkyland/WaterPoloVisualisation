@@ -30,7 +30,14 @@ class Pool {
         this.players = [];
         this.playersLinks = [];
     }
-
+    setOrigineCoordX(value) {
+        this.origine_coord_x = value;
+        return this;
+    }
+    setOrigineCoordY(value) {
+        this.origine_coord_y = value;
+        return this;
+    }
     getPoolHeight = () => {
         return this.height;
     }

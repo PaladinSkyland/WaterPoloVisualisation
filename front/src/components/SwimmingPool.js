@@ -125,7 +125,7 @@ function SwimmingPool(props){
     return(
         <div>
             <div className="pool-container">
-                <div ref={containerRef} className="stage-container">
+                <div ref={containerRef} className={`stage-container ${props.className}`}>
                     <Stage
                         x={dimensions.offsetX}
                         y={dimensions.offsetY}

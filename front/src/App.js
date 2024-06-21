@@ -21,18 +21,21 @@ function App() {
     };
   });
 
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('pool');
 
-  let content = 'home';
+  let content
   switch (activeTab) {
-    case 'home':
-      content = <SwimmingPool pool={pool} settings={settings}/>;
+    case 'pool':
+      content = <SwimmingPool className="main" pool={pool} settings={settings}/>;
       break;
     case 'settings':
-      content = <Settings settings={settings} setSettings={setSettings} />;
+      content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;
       break;
+    case 'statistics':
+        content = <p> test</p>;
+        break;
     default:
-      content = 'home';
+      content = 'pool';
       break;
   }
 

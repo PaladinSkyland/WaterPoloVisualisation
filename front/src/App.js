@@ -10,7 +10,6 @@ function App() {
   const address = 'ws://localhost:8080?file=dynamic5';
 
   const [pool, setPool] = useState(new Pool());
-
   const [settings, setSettings] = useState(() => {
     const storedValues = localStorage.getItem('settings');
     return storedValues ? JSON.parse(storedValues) : {
@@ -22,6 +21,15 @@ function App() {
       zone: 'pool',
     };
   });
+
+useEffect(() => {
+  setPool((currentPool) => {
+    let newPool = new Pool(currentPool);
+    newPool.setOrigineCoordX(settings.ancreH);
+    newPool.setOrigineCoordY(settings.ancreV);
+    return newPool;
+  });
+}, [settings.ancreH, settings.ancreV]);
 
   const [activeTab, setActiveTab] = useState('pool');
 

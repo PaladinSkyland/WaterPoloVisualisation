@@ -5,8 +5,7 @@
   width: 5%;
   height: 100%;
   overflow: auto;
-  background-color: #9994DB ;
-  padding: 20px;
+  background-color: #90C7CB ;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -14,4 +13,20 @@
 
 .NavBar button {
   margin-bottom: 10px;
+}
+
+.logo {
+  padding: 25%; /* Ajustez la taille selon vos besoins */
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s; /* Ajoutez des transitions pour une animation fluide */
+}
+
+.logo.clicked {
+  transform: scale(1.1); 
+  background-color: lightblue; 
+}
+
+.NavBar .logo:hover {
+  background-color: lightblue;
 }

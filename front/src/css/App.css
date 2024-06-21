@@ -4,6 +4,9 @@
     text-align: center;
     line-height: 100dvh;
 }
+body, html {
+    background-color: #EFF4F8;
+  }
 
 .content {
     margin-left: 5%;

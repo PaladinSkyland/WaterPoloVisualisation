@@ -1,73 +1,66 @@
-import {Group, Layer, Rect } from 'react-konva';
+import { Group, Rect } from 'react-konva';
 
-function WaterpoloPoolWidth(props){
-    return(
-        <Layer>
-            <Group
-            x={0} //Put margin x
-            y={0} // Put margin y
+function WaterpoloPoolWidth(props) {
+
+    return (
+        <Group
+            x={0}
+            y={0}
         >
             <Rect
-                                x={0 + 2} // put x margin instead of 2
-                                y={0}
-                                width={0.5}
-                                height={25}
-                                fill='white'
+                x={props.left ? props.settings.margeH - 0.5 : props.settings.gender === "male" ? 30 + props.settings.margeH : 25 + props.settings.margeH}
+                y={0}
+                width={0.5}
+                height={25}
+                fill='white'
 
-                            />
-                            <Rect
-                                x={1.25 + 2} // put x margin instead of 2
-                                y={0}
-                                width={0.5}
-                                height={25}
-                                fill='white'
+            />
+            <Rect
+                x={props.left ? props.settings.margeH - 1.75 : props.settings.gender === "male" ? 31.25 + props.settings.margeH : 26.25 + props.settings.margeH}
+                y={0}
+                width={0.5}
+                height={25}
+                fill='white'
 
-                            />
-                            <Rect
-                                x={0}
-                                y={0 + 2} // put y margin instead of + 2 
-                                width={1.75 + 2} // put x margin instead of 2
-                                height={0.5}
-                                fill='white'
+            />
 
-                            />
-                            <Rect
-                                x={0}
-                                y={20.5 + 2} // put y margin instead of + 2 
-                                width={1.75 + 2} // put x margin instead of 2 
-                                height={0.5}
-                                fill='white'
+            {/* Prison */}
+            <Rect
+                x={props.left ? props.settings.margeH - 0.5 : props.settings.gender === "male" ? 30 + props.settings.margeH : 25 + props.settings.margeH} // margin x instead of 2
+                y={props.settings.margeV + 0.5}
+                width={0.5}
+                height={2.5}
+                fill='red'
 
-                            />
-                            <Rect
-                                x={0 + 2} // margin x instead of 2
-                                y={2 +0.5} // put y margin instead of 2 
-                                width={0.5} // put x margin instead of 2 
-                                height={2.5}
-                                fill='red'
+            />
+            <Rect
+                x={props.left ? props.settings.margeH - 1.75 : props.settings.gender === "male" ? 31.25 + props.settings.margeH : 26.25 + props.settings.margeH} // margin x instead of 2
+                y={props.settings.margeV + 0.5}
+                width={0.5}
+                height={2.5}
+                fill='red'
 
-                            />
-                            <Rect
-                                x={1.25 + 2} // margin x instead of 2
-                                y={2 +0.5} // put y margin instead of 2 
-                                width={0.5} // put x margin instead of 2 
-                                height={2.5}
-                                fill='red'
+            />
+            <Rect
+                x={props.left ? props.settings.margeH - 1.75 : props.settings.gender === "male" ? 30 + props.settings.margeH : 25 + props.settings.margeH} // margin x instead of 2
+                y={props.settings.margeV + 2.5}
+                width={1.75}
+                height={0.5}
+                fill='red'
 
-                            />
-                            <Rect
-                                x={2} // margin x instead of 2
-                                y={2 + 2.5} // put y margin instead of 2 
-                                width={1.75} // put x margin instead of 2 
-                                height={0.5}
-                                fill='red'
+            />
 
-                            />
+            {/* Goal */}
+            <Rect
+                x={props.left ? props.settings.margeH - 1.75 : props.settings.gender === "male" ? 29.7 + props.settings.margeH : 24.7 + props.settings.margeH} // margin x instead of 2
+                y={props.settings.margeV + 9}
+                width={2.05}
+                height={3}
+                fill='black'
 
-            </Group>
-        </Layer>
+            />
 
-        
+        </Group>
     )
 }
 

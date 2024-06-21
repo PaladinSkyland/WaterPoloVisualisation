@@ -1,14 +1,40 @@
 import React from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
+import Zone from './Zone';
+import SwimmingPool from './SwimmingPool';
 
-function Settings({ values, setValues }) {
+function Settings({ pool, settings, setSettings }) {
 
-    const handleChange = e => {
-        setValues({
-            ...values,
-            [e.target.name]: e.target.value
+    const maxHorizontalLimit = settings.gender === "male" ? 18 : 23
+    const minHorizontalLimit = 2
+    const maxVerticalLimit = 4
+
+    const handleNumberChange = (event) => {
+        const { name, value } = event.target;
+        let newValue = parseFloat(value);
+
+        if (name === "margeH" && newValue > maxHorizontalLimit) {
+            newValue = maxHorizontalLimit;
+        }
+        else if (name === "margeH" && newValue < minHorizontalLimit) {
+            newValue = minHorizontalLimit;
+        }
+        else if (name === "margeV" && newValue > maxVerticalLimit) {
+            newValue = maxVerticalLimit;
+        }
+
+        setSettings({
+            ...settings,
+            [name]: isNaN(newValue) ? 0 : newValue
         })
+    }
+
+    const handleValueChange = e => {
+        setSettings({
+            ...settings,
+            [e.target.name]: e.target.value
+        });
     }
     
   return (
@@ -16,28 +42,30 @@ function Settings({ values, setValues }) {
         <Distance 
             label="MargeV" 
             name="margeV" 
-            value={values.margeV} 
-            handleChange={handleChange} 
+            value={settings.margeV} 
+            handleChange={handleNumberChange} 
         />
         <Distance 
             label="MargeH" 
             name="margeH" 
-            value={values.margeH} 
-            handleChange={handleChange} 
+            value={settings.margeH} 
+            handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreV" 
             name="ancreV" 
-            value={values.ancreV} 
-            handleChange={handleChange} 
+            value={settings.ancreV} 
+            handleChange={handleNumberChange} 
         />
         <Distance
             label="AncreH" 
             name="ancreH" 
-            value={values.ancreH} 
-            handleChange={handleChange} 
+            value={settings.ancreH} 
+            handleChange={handleNumberChange} 
         />
-        <Gender value={values.gender} handleChange={handleChange} />
+        <Gender value={settings.gender} handleChange={handleValueChange} />
+        <Zone value={settings.zone} handleChange={handleValueChange} />
+        <SwimmingPool className="settings" pool={pool} settings={settings}/>
     </div>
   );
 }

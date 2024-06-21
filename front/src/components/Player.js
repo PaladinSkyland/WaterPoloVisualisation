@@ -1,10 +1,47 @@
-import React from 'react';
-import { Group, Circle, Text, Arrow } from 'react-konva';
+import React, { useEffect, useRef, useState } from 'react';
+import { Group, Circle, Text, Arrow, Arc } from 'react-konva';
+import { Animation } from 'konva';
 
 function Player(props) {
     const { player, index } = props;
     const size = 0.5;
 
+    const playerRef = innerRef;
+    const spinnerRef = useRef(null);
+
+    useEffect(() => {
+        if (playerRef.current === null) return;
+        if (player.time === time) return;
+        if (time === 0) {
+            playerRef.current.x(player.x);
+            playerRef.current.y(player.y);
+        }
+        else {
+            playerRef.current.to({
+                x: player.x,
+                y: player.y,
+                duration: player.time - time,
+            });
+        };
+        setTime(player.time);
+    }, [playerRef, player.time, player.x, player.y, time]);
+
+    useEffect(() => {
+        if (spinnerRef.current === null) return;
+        const animation = new Animation((frame) => {
+            if (spinnerRef.current === null) return;
+            const angleDiff = (frame.timeDiff * 360) / 2000;
+            const newRotation = (spinnerRef.current.rotation() + angleDiff) % 360;
+            spinnerRef.current.rotation(newRotation);
+        }, spinnerRef.current.getLayer());
+    
+        animation.start();
+    
+        return () => {
+          animation.stop();
+        };
+      }, [player.selected]);
+    
     const getColorForValue = (value, minValue, maxValue) => {
         const normalizedValue = Math.min(Math.max(value / maxValue, minValue), 1);
       
@@ -41,45 +78,81 @@ function Player(props) {
     
     return (
         <Group
-            x={player.x - size * 2}
-            y={player.y - size * 2}
+            ref={playerRef}
+            x={0}
+            y={0}
+            offsetX={fontSize * 2}
+            offsetY={fontSize * 2}
             key={index}
-            width={size * 4}
-            height={size * 4}
+            width={fontSize * 4}
+            height={fontSize * 4}
+            className="player"
+            value={index}
+            align="center"
+            onMouseEnter={(e) => {
+                document.body.style.cursor = 'pointer';
+            }}
+            onMouseLeave={(e) => {
+                document.body.style.cursor = 'default';
+            }}
         >
+            {player.selected &&
+                <Arc
+                    ref={spinnerRef}
+                    x={fontSize * 2}
+                    y={fontSize * 2}
+                    innerRadius={fontSize * 1.5}
+                    outerRadius={fontSize * 2}
+                    angle={270}
+                    fill="#FF0000"
+                    rotation={0}
+                />
+            }
             <Circle
-                x={size * 2}
-                y={size * 2}
-                radius={size}
+                x={fontSize * 2}
+                y={fontSize * 2}
+                radius={fontSize}
                 fill="red"
-            />
+                className="player"
+                value={index}
+                />
             <Text
+                x={fontSize * 2}
+                y={fontSize * 2}
                 text={'P' + (index + 1)}
-                fontSize={size}
+                fontSize={fontSize}
                 fill="white"
                 align="center"
                 verticalAlign='middle'
-                height={size * 4}
-                width={size * 4}
+                height={fontSize * 4}
+                width={fontSize * 4}
                 wrap='none'
+                rotation={-playerRef.current?.getStage()?.rotation() || 0}
+                offsetX={fontSize * 2}
+                offsetY={fontSize * 2}
+                className="player"
+                value={index}
             />
             <Circle
-                x={size * 2}
-                y={size * 2}
-                radius={size}
+                x={fontSize * 2}
+                y={fontSize * 2}
+                radius={fontSize}
                 stroke={getColorForValue(player.speed, 0, 20)}
-                strokeWidth={0.1}
-                zIndex={0}
+                strokeWidth={0.2 * fontSize}
+                className="player"
+                value={index}
             />
             {player.speed > 5 && 
                 <Arrow
-                    x={size * 3}
-                    y={size * 2}
-                    points={[0, 0, 0, -size]}
-                    pointerLength={size}
-                    pointerWidth={size}
+                    x={fontSize * 2}
+                    y={fontSize * 2}
+                    points={[0, 0, fontSize * 2, 0]}
+                    pointerLength={fontSize}
+                    pointerWidth={fontSize}
                     fill={getColorForValue(player.speed, 0, 20)}
-                    rotation={90}
+                    rotation={player.speed * 100}
+                    className="player"
+                    value={index}
                 />
             }
             <Text

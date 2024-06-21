@@ -20,6 +20,7 @@ console.log(`ws server running on port ${WS_PORT}`);
 
 wss.on('connection', (ws, request) => {
     let currentStream = null;
+    let previousData = {};
     console.log('new ws client');
     let options = new URL(`http://localhost${request.url}`).searchParams;
     let file = CSV_FILES[options.get('file')] ?? CSV_FILES.dynamic1;
@@ -56,6 +57,10 @@ wss.on('connection', (ws, request) => {
                 //console.log(currentStream, id);
                 return;
             }
+            let anchor = row['Ancre'];
+            let currentX = parseFloat(row['X']);
+            let currentY = parseFloat(row['Y']);
+            let currentZ = parseFloat(row['Z']);
             const rowTimestamp = Number(+row['temps_ms'].replace(/\u202F/g, '')) / 1000;
             if (!shouldStartSending) {
                 //const rowTimestamp = +row['temps_ms'];
@@ -65,14 +70,34 @@ wss.on('connection', (ws, request) => {
                     continue;
                 }
             }
+
+            let speed = 0;
+
+            if (!isNaN(currentX) && !isNaN(currentY) && !isNaN(rowTimestamp)) {
+                if (previousData[anchor]) {
+                    let distance = Math.sqrt(Math.pow(currentX - previousData[anchor].x, 2) + Math.pow(currentY - previousData[anchor].y, 2));
+                    let timeDifference = rowTimestamp - previousData[anchor].time;
+
+                    if (timeDifference > 0) {
+                        speed = distance / timeDifference;
+                    }
+                }
+
+                previousData[anchor] = {
+                    x: currentX,
+                    y: currentY,
+                    time: rowTimestamp
+                };
+            }
     
             const data = {
                 time: rowTimestamp,
-                anchor: row['Ancre'],
-                x: +row['X'],
-                y: +row['Y'],
-                z: +row['Z'],
-                precision: +row['Precision %']
+                anchor: row['Ancre'], //anchor
+                x: +row['X'], //currentX
+                y: +row['Y'], //currentY
+                z: +row['Z'], //currentZ
+                precision: +row['Precision %'],
+                instant_speed: speed
             }
     
             ws.send(JSON.stringify(data));
@@ -96,23 +121,51 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
-
 /*
+const previousData = {};
+
+
 async function sendCSV(ws, file) {
     const parser = fs.createReadStream(file)
     .pipe(parse({ delimiter: ";", columns: true }))
 
     for await (const row of parser) {
         await new Promise((resolve) => setTimeout(resolve, row['Temps_acquisition']));
-        data = {
-            time: +row['temps_ms'] / 1000,
+
+        let anchor = row['Ancre'];
+        let currentX = parseFloat(row['X']);
+        let currentY = parseFloat(row['Y']);
+        let currentTime = parseFloat(row['temps_ms'].replace(/\s/g, '') / 1000);
+
+        let speed = 0;
+
+        if (!isNaN(currentX) && !isNaN(currentY) && !isNaN(currentTime)) {
+            if (previousData[anchor]) {
+                let distance = Math.sqrt(Math.pow(currentX - previousData[anchor].x, 2) + Math.pow(currentY - previousData[anchor].y, 2));
+                let timeDifference = currentTime - previousData[anchor].time;
+
+                if (timeDifference > 0) {
+                    speed = distance / timeDifference;
+                }
+            }
+
+            previousData[anchor] = {
+                x: currentX,
+                y: currentY,
+                time: currentTime
+            };
+        }
+
+        const data = {
+            time: +row['temps_ms'].replace(/\s/g, '') / 1000,
             anchor: row['Ancre'],
             x: +row['X'],
             y: +row['Y'],
             z: +row['Z'],
-            precision: +row['Precision %']
-        }
+            precision: +row['Precision %'],
+            instant_speed: speed
+        };
+        
         ws.send(JSON.stringify(data));
     }
 

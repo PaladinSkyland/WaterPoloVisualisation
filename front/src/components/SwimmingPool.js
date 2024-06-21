@@ -149,7 +149,7 @@ function SwimmingPool(props){
                                 y={0}
                                 width={props.pool.getPoolWidth()}
                                 height={props.pool.getPoolHeight()}
-                                fill="#6472ef"
+                                fill="#00a8e4"
                                 stroke="black"
                                 strokeWidth={0.2}
                             />

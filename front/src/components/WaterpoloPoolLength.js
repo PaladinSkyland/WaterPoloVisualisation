@@ -16,47 +16,53 @@ function WaterpoloPoolLength(props) {
                 width={props.settings.margeH}
                 height={0.5}
                 fill='white'
-                strokeWidth={0.1}
+                stroke="black"
+                strokeWidth={0.05}
             />
             <Rect
                 x={props.settings.margeH}
                 y={yPos + props.settings.margeV}
                 width={2}
                 height={0.5}
-                fill='red'
-                strokeWidth={0.1}
+                fill='#e61d4d'
+                stroke="black"
+                strokeWidth={0.05}
             />
             <Rect
                 x={props.settings.margeH + 2}
                 y={yPos + props.settings.margeV}
                 width={3}
                 height={0.5}
-                fill='orange'
-                strokeWidth={0.1}
+                fill='#ffcc00'
+                stroke="black"
+                strokeWidth={0.05}
             />
             <Rect
                 x={props.settings.margeH + 5}
                 y={yPos + props.settings.margeV}
                 width={props.settings.gender === 'male' ? 20 : 15}
                 height={0.5}
-                fill='green'
-                strokeWidth={0.1}
+                fill='#76b82a'
+                stroke="black"
+                strokeWidth={0.05}
             />
             <Rect
                 x={props.settings.margeH + rightZoneX.orange}
                 y={yPos + props.settings.margeV}
                 width={3}
                 height={0.5}
-                fill='orange'
-                strokeWidth={0.1}
+                fill='#ffcc00'
+                stroke="black"
+                strokeWidth={0.05}
             />
             <Rect
                 x={props.settings.margeH + rightZoneX.red}
                 y={yPos + props.settings.margeV}
                 width={2}
                 height={0.5}
-                fill='red'
-                strokeWidth={0.1}
+                fill='#e61d4d'
+                stroke="black"
+                strokeWidth={0.05}
             />
             <Rect
                 x={props.settings.gender === 'male' ? 30 + props.settings.margeH : 25 + props.settings.margeH}
@@ -64,7 +70,9 @@ function WaterpoloPoolLength(props) {
                 width={props.settings.gender === 'male' ? 20 - props.settings.margeH : 25 - props.settings.margeH}
                 height={0.5}
                 fill='white'
-                strokeWidth={0.1}
+                stroke="black"
+                strokeWidth={0.05}
+                
             />
         </Group>
     )

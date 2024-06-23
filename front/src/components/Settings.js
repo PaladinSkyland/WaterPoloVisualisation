@@ -3,6 +3,7 @@ import Distance from './Distance';
 import Gender from './Gender';
 import Zone from './Zone';
 import SwimmingPool from './SwimmingPool';
+import PlayerTable from './PlayerTable';
 
 function Settings({ pool, settings, setSettings }) {
 
@@ -76,18 +77,14 @@ function Settings({ pool, settings, setSettings }) {
                         handleChange={handleNumberChange}
                     />
                 </div>
-                
             </div>
             <div className='gender-container'>
                 <Gender value={settings.gender} handleChange={handleValueChange} />
             </div>
             
-
-            
             <Zone value={settings.zone} handleChange={handleValueChange} />
             <SwimmingPool className="settings" pool={pool} settings={settings} />
-            
-
+            <PlayerTable value={pool.players} />
         </div>
     );
 }

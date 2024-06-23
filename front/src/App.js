@@ -24,7 +24,10 @@ function App() {
 
 useEffect(() => {
   setPool((currentPool) => {
-    let newPool = new Pool(currentPool);
+    const newPool = Object.create(
+      Object.getPrototypeOf(currentPool),
+      Object.getOwnPropertyDescriptors(currentPool)
+    );
     newPool.setOrigineCoordX(settings.ancreH);
     newPool.setOrigineCoordY(settings.ancreV);
     return newPool;

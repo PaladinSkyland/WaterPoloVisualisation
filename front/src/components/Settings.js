@@ -2,6 +2,7 @@ import React from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
 import SwimmingPool from './SwimmingPool';
+import PlayerTable from './PlayerTable';
 
 function Settings({ pool, settings, setSettings }) {
 
@@ -82,7 +83,7 @@ function Settings({ pool, settings, setSettings }) {
             </div>
             
             <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
-            
+            <PlayerTable value={pool.players} />
 
         </div>
     );

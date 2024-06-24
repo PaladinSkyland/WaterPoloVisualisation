@@ -11,7 +11,7 @@ class ProgressBar extends Component {
   }
 
   handleClick = (e) => {
-    const { minTime, maxTime, handleChange } = this.props;
+    const { minTime, maxTime, handleChange, play, pause} = this.props;
     const progressWidth = this.progressBarRef.current.offsetWidth;
     const offsetX = e.nativeEvent.offsetX;
     const newProgress = offsetX / progressWidth * (maxTime - minTime) + minTime;
@@ -19,11 +19,15 @@ class ProgressBar extends Component {
   }
 
   togglePlayPause = () => {
-    this.setState(prevState => ({
-      isPlaying: !prevState.isPlaying
-    }), () => {
-      console.log(this.state.isPlaying ? 'Play' : 'Pause');
-    });
+    const { play, pause } = this.props;
+    if (this.state.isPlaying) {
+      pause();
+    } else {
+      play();
+    }
+    this.setState((prevState) => ({
+      isPlaying: !prevState.isPlaying,
+    }));
   }
 
 

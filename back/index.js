@@ -52,7 +52,18 @@ wss.on('connection', (ws, request) => {
     ws.on('message', (message) => {
         console.log(`message from ws client: ${message}`);
         data = JSON.parse(message);
-        if (data.timestamp !== undefined || data.timestamp !== null) {
+        if (data.play) {
+            //sendCSV(ws, CSV_FILES[file]);
+            currentStream = Math.random().toString(16);
+            if (data.timestamp !== undefined || data.timestamp !== null) {
+                sendCSVstartTimestamp(ws, file, data.timestamp, currentStream);
+            } else {
+                sendCSVstartTimestamp(ws, file, 0, currentStream);
+            }
+        }else if(data.pause){
+            currentStream = null;
+        }
+        else if (data.timestamp !== undefined || data.timestamp !== null) {
             //sendPosForTimestamp(ws, file, data.timestamp);
             //console.log(data.timestamp);
             currentStream = Math.random().toString(16);

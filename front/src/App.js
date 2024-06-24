@@ -69,7 +69,7 @@ useEffect(() => {
 
     newWs.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      console.log(data);
+      //console.log(data);
       if (data.TimeData) {
         setMinMaxTime([data.TimeData.firstTime / 1000, data.TimeData.lastTime / 1000]);
       }
@@ -112,6 +112,16 @@ useEffect(() => {
     setProgress(parseInt(newProgress));
   }
 
+  function play() {
+    ws.send(JSON.stringify({ play: true , timestamp: parseFloat(progress) }));
+    //console.log('play');
+  }
+
+  function pause() {
+    ws.send(JSON.stringify({ pause: true }));
+    //console.log('pause');
+  }
+
   return (
     <div className="App">
       {isLandscape ? (
@@ -119,7 +129,7 @@ useEffect(() => {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab} settings={settings} setSettings={setSettings}/>
           <div className="content">
             {content}
-          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} />
+          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} play={play} pause={pause} />
           </div>
         </div>
       ) : (

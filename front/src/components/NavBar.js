@@ -27,7 +27,7 @@ function NavBar({ activeTab, setActiveTab, settings, setSettings }) {
       />
       </div>
       <div className='zone'>
-        {activeTab === 'pool' && <Zone value={settings.zone} settings={settings} setSettings={setSettings}></Zone>}
+        {(activeTab === 'pool' || activeTab === 'settings') && <Zone value={settings.zone} settings={settings} setSettings={setSettings}></Zone>}
       </div>
     </div>
     

@@ -58,12 +58,12 @@ class Pool {
         this.players = this.players.filter(player => player.tag !== tag);
     }
 
-    movePlayerOrAdd(time, tag, x, y, z, precision) {
+    movePlayerOrAdd(time, acquisitionTime, tag, x, y, z, precision, speed, direction) {
         x += this.origine_coord_x;
         y += this.origine_coord_y;
         let player = this.players.find(player => player.tag === tag);
         if (!player) {
-            let newplayer = new Player(time, tag, x, y, z, precision);
+            let newplayer = new Player(time, acquisitionTime, tag, x, y, z, precision, speed, direction);
             this.addPlayer(newplayer);
         }
         if (player) {
@@ -72,6 +72,8 @@ class Pool {
             player.y = y;
             player.z = z;
             player.precision = precision;
+            player.speed = speed;
+            player.direction = direction;
         }
     }
 }

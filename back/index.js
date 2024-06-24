@@ -70,15 +70,20 @@ wss.on('connection', (ws, request) => {
 
     async function sendCSVstartTimestamp(ws, file, startTimestamp, id) {
         const stmt = db.prepare(`SELECT *,
-            time - LAG(time) OVER (PARTITION BY matchid ORDER BY time) AS acquisition_time,
-            SQRT(
-                POW(x - LAG(x) OVER (PARTITION BY matchid, anchor ORDER BY time), 2)
-                + POW(y - LAG(y) OVER (PARTITION BY matchid, anchor ORDER BY time), 2)
-            ) / (time - LAG(time) OVER (PARTITION BY matchid, anchor ORDER BY time)) AS speed
-            FROM positions
-            WHERE matchid = ?
-            AND time >= ?
-            ORDER BY time;
+            time - prev_time AS acquisition_time,
+            SQRT(POW(x - prev_x, 2) + POW(y - prev_y, 2)) / (time - prev_time) as speed,
+            ATAN2(y - prev_y, x - prev_x) as direction
+            FROM (
+                SELECT *,
+                time - LAG(time) OVER (PARTITION BY matchid ORDER BY time) AS sleep_time,
+                LAG(x) OVER (PARTITION BY matchid, anchor ORDER BY time) as prev_x,
+                LAG(y) OVER (PARTITION BY matchid, anchor ORDER BY time) as prev_y,
+                LAG(time) OVER (PARTITION BY matchid, anchor ORDER BY time) as prev_time
+                FROM positions
+                WHERE matchid = ?
+                AND time >= ?
+                ORDER BY time
+            )
         `);
 
         for (const row of stmt.iterate(file, startTimestamp)) {
@@ -86,19 +91,21 @@ wss.on('connection', (ws, request) => {
                 return;
             }
 
-            if (row['acquisition_time']) {
-                await delay(row['acquisition_time'] * 1000);
+            if (row['sleep_time']) {
+                await delay(row['sleep_time'] * 1000);
             }
             console.log(row['time']);
     
             ws.send(JSON.stringify({
                 time: row['time'],
+                acquisition_time: row['acquisition_time'],
                 anchor: row['anchor'],
                 x: row['x'],
                 y: row['y'],
                 z: row['z'],
                 precision: row['precision'],
-                instant_speed: row['speed']
+                speed: row['speed'],
+                direction: row['direction']
             }));
         }
 

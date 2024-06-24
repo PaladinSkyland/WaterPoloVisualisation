@@ -72,13 +72,13 @@ useEffect(() => {
         setMinMaxTime([data.TimeData.firstTime / 1000, data.TimeData.lastTime / 1000]);
       }
       if (data.x && data.y) {
-        const { time, anchor, x, y, z, precision } = data;
+        const { time, acquisitionTime, anchor, x, y, z, precision, speed, direction } = data;
         setPool((currentPool) => {
           const newPool = Object.create(
             Object.getPrototypeOf(currentPool),
             Object.getOwnPropertyDescriptors(currentPool)
           );
-          newPool.movePlayerOrAdd(time, anchor, x, y, z, precision);
+          newPool.movePlayerOrAdd(time, acquisitionTime, anchor, x, y, z, precision, speed, direction);
           return newPool;
         });
       }

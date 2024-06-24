@@ -4,7 +4,6 @@ import { Animation } from 'konva';
 
 function Player(props) {
     const { innerRef, player, index, fontSize } = props;
-    player.speed = player.y;
     let [time, setTime] = useState(0);
 
     const playerRef = innerRef;
@@ -12,8 +11,7 @@ function Player(props) {
 
     useEffect(() => {
         if (playerRef.current === null) return;
-        if (player.time === time) return;
-        if (time === 0) {
+        if (player.acquisitionTime === 0) {
             playerRef.current.x(player.x);
             playerRef.current.y(player.y);
         }
@@ -21,11 +19,11 @@ function Player(props) {
             playerRef.current.to({
                 x: player.x,
                 y: player.y,
-                duration: player.time - time,
+                duration: player.acquisitionTime,
             });
         };
         setTime(player.time);
-    }, [playerRef, player.time, player.x, player.y, time]);
+    }, [playerRef, player.x, player.y, player.acquisitionTime]);
 
     useEffect(() => {
         if (spinnerRef.current === null) return;
@@ -138,20 +136,20 @@ function Player(props) {
                 x={fontSize * 2}
                 y={fontSize * 2}
                 radius={fontSize}
-                stroke={getColorForValue(player.speed, 0, 20)}
+                stroke={getColorForValue(player.speed, 0, 4)}
                 strokeWidth={0.2 * fontSize}
                 className="player"
                 value={index}
             />
-            {player.speed > 5 && 
+            {player.speed > 1 && 
                 <Arrow
                     x={fontSize * 2}
                     y={fontSize * 2}
                     points={[0, 0, fontSize * 2, 0]}
                     pointerLength={fontSize}
                     pointerWidth={fontSize}
-                    fill={getColorForValue(player.speed, 0, 20)}
-                    rotation={player.speed * 100}
+                    fill={getColorForValue(player.speed, 0, 4)}
+                    rotation={player.direction * 180 / Math.PI}
                     className="player"
                     value={index}
                 />

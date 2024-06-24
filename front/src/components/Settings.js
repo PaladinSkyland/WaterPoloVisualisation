@@ -76,7 +76,6 @@ function Settings({ pool, settings, setSettings }) {
                         handleChange={handleNumberChange}
                     />
                 </div>
-                
             </div>
             <div className='gender-container'>
                 <Gender value={settings.gender} handleChange={handleValueChange} />

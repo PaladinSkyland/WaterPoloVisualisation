@@ -1,13 +1,12 @@
 import React from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
-import Zone from './Zone';
 import SwimmingPool from './SwimmingPool';
 
 function Settings({ pool, settings, setSettings }) {
 
     const maxHorizontalLimit = settings.gender === "male" ? 18 : 23
-    const minHorizontalLimit = 2
+    const minHorizontalLimit = 1.75
     const maxVerticalLimit = 4
     const minVerticalLimit = 0
 
@@ -82,10 +81,7 @@ function Settings({ pool, settings, setSettings }) {
                 <Gender value={settings.gender} handleChange={handleValueChange} />
             </div>
             
-
-            
-            <Zone value={settings.zone} handleChange={handleValueChange} />
-            <SwimmingPool className="settings" pool={pool} settings={settings} />
+            <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
             
 
         </div>

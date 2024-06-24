@@ -42,7 +42,7 @@ useEffect(() => {
   let content
   switch (activeTab) {
     case 'pool':
-      content = <SwimmingPool className="main" pool={pool} settings={settings}/>;
+      content = <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />;
       break;
     case 'settings':
       content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;
@@ -77,13 +77,13 @@ useEffect(() => {
         setProgress(data.time);
       }
       if (data.x && data.y) {
-        const { time, anchor, x, y, z, precision } = data;
+        const { time, acquisitionTime, anchor, x, y, z, precision, speed, direction } = data;
         setPool((currentPool) => {
           const newPool = Object.create(
             Object.getPrototypeOf(currentPool),
             Object.getOwnPropertyDescriptors(currentPool)
           );
-          newPool.movePlayerOrAdd(time, anchor, x, y, z, precision);
+          newPool.movePlayerOrAdd(time, acquisitionTime, anchor, x, y, z, precision, speed, direction);
           return newPool;
         });
       }
@@ -116,7 +116,7 @@ useEffect(() => {
     <div className="App">
       {isLandscape ? (
         <div>
-          <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
+          <NavBar activeTab={activeTab} setActiveTab={setActiveTab} settings={settings} setSettings={setSettings}/>
           <div className="content">
             {content}
           <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} />

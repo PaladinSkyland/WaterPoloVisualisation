@@ -1,0 +1,93 @@
+.progress-bar-parent {
+    width: 100%; /* Ensure the parent takes full width */
+    height: 50px; /* Adjust the height as needed */
+    position: absolute;
+    bottom: 3%;
+  }
+
+  .progress-bar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 100%; /* Match the height of the parent */
+    background-color: rgba(235, 226, 226, 0.63); /* Adjust the alpha value for transparency */
+    border-radius: 25px; /* Rounded corners */
+    padding: 10px; /* Adjust padding as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for better visual */
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0; /* Initially invisible */
+    transition: opacity 0.3s; /* Smooth transition */
+  }
+  
+
+  .progress-bar-parent:hover .progress-bar-container {
+    opacity: 1; /* Visible on hover */
+  }
+  
+  
+  .pause-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .pause-button img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .progress-bar-wrapper {
+    width: 80%; /* Adjust width as needed */
+    height: 10px; /* Adjust height as needed */
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #007bff;
+    border-radius: 5px;
+  }
+
+  .progress-circle {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    background-color: #007bff;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+  }
+
+  .progress-label {
+    position: absolute;
+    top: -25px; /* Position above the progress bar */
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #000;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 2px 5px;
+    border-radius: 5px;
+  }
+
+  
+.max-time-label {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #000;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 2px 5px;
+    border-radius: 5px;
+  }

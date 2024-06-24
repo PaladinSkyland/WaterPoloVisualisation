@@ -107,12 +107,10 @@ useEffect(() => {
     };
   }, []);
 
-  
-
-  const handleChangeProgress = (event) => {
-    ws.send(JSON.stringify({ timestamp: parseFloat(event.target.value)}));
-    setProgress(parseInt(event.target.value));
-  };
+  function handleChange(newProgress) {
+    ws.send(JSON.stringify({ timestamp: parseFloat(newProgress) }));
+    setProgress(parseInt(newProgress));
+  }
 
   return (
     <div className="App">
@@ -121,7 +119,7 @@ useEffect(() => {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
           <div className="content">
             {content}
-
+          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} />
           </div>
         </div>
       ) : (

@@ -125,7 +125,7 @@ useEffect(() => {
     <div className="App">
       {isLandscape ? (
         <div>
-          <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
+          <NavBar activeTab={activeTab} setActiveTab={setActiveTab} settings={settings} setSettings={setSettings}/>
           <div className="content">
             {content}
             <input

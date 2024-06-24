@@ -4,29 +4,50 @@
   top: 0;
   width: 5%;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   background-color: #90C7CB ;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-}
-
-.NavBar button {
-  margin-bottom: 10px;
+  justify-content: space-between;
 }
 
 .logo {
-  padding: 25%; /* Ajustez la taille selon vos besoins */
-  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 3vw;
+  padding: 1vw 0;
   cursor: pointer;
-  transition: transform 0.2s, filter 0.2s; /* Ajoutez des transitions pour une animation fluide */
+  margin: 0;
 }
 
-.logo.clicked {
-  transform: scale(1.1); 
+.logo.clicked, .zone .clicked{
   background-color: lightblue; 
 }
 
-.NavBar .logo:hover {
+.NavBar .logo:hover, .zone img:hover {
   background-color: lightblue;
 }
+
+.zone{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5vh;
+
+}
+.zone img{
+  height: 2vw;
+  border-radius: 100%;
+  padding: 1vh;
+}
+
+.zone img:hover{
+  cursor: pointer;
+}
+
+

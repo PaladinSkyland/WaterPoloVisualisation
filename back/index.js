@@ -62,10 +62,12 @@ wss.on('connection', (ws, request) => {
 
     ws.on('error', (err) => {
         console.log(`error in ws client: ${err}`);
+        currentStream = null;
     });
 
     ws.on('close', (code, reason) => {
         console.log(`ws client closed with code ${code}: ${reason}`);
+        currentStream = null;
     });
 
     async function sendCSVstartTimestamp(ws, file, startTimestamp, id) {
@@ -94,7 +96,6 @@ wss.on('connection', (ws, request) => {
             if (row['sleep_time']) {
                 await delay(row['sleep_time'] * 1000);
             }
-            console.log(row['time']);
     
             ws.send(JSON.stringify({
                 time: row['time'],

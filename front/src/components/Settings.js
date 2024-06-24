@@ -87,6 +87,7 @@ function Settings({ pool, settings, setSettings }) {
             <Zone value={settings.zone} handleChange={handleValueChange} />
             <SwimmingPool className="settings" pool={pool} settings={settings} />
             
+
         </div>
     );
 }

@@ -13,6 +13,8 @@ function WaterpoloPoolWidth(props) {
                 width={0.5}
                 height={25}
                 fill='white'
+                stroke="black"
+                strokeWidth={0.05}
 
             />
             <Rect
@@ -21,6 +23,8 @@ function WaterpoloPoolWidth(props) {
                 width={0.5}
                 height={25}
                 fill='white'
+                stroke="black"
+                strokeWidth={0.05}
 
             />
 
@@ -30,7 +34,9 @@ function WaterpoloPoolWidth(props) {
                 y={props.settings.margeV + 0.5}
                 width={0.5}
                 height={2.5}
-                fill='red'
+                fill='#e61d4d'
+                stroke="black"
+                strokeWidth={0.05}
 
             />
             <Rect
@@ -38,7 +44,9 @@ function WaterpoloPoolWidth(props) {
                 y={props.settings.margeV + 0.5}
                 width={0.5}
                 height={2.5}
-                fill='red'
+                fill='#e61d4d'
+                stroke="black"
+                strokeWidth={0.05}
 
             />
             <Rect
@@ -46,7 +54,9 @@ function WaterpoloPoolWidth(props) {
                 y={props.settings.margeV + 2.5}
                 width={1.75}
                 height={0.5}
-                fill='red'
+                fill='#e61d4d'
+                stroke="black"
+                strokeWidth={0.05}
 
             />
 
@@ -56,7 +66,9 @@ function WaterpoloPoolWidth(props) {
                 y={props.settings.margeV + 9}
                 width={2.05}
                 height={3}
-                fill='black'
+                fill='white'
+                stroke="black"
+                strokeWidth={0.05}
 
             />
 

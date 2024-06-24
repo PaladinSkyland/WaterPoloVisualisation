@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
 const fs = require('fs');
 const { parse } = require("csv-parse");
+const db = require('better-sqlite3')('data/db.sqlite');
 
 const WS_PORT = 8080
 const CSV_FILES = {
@@ -14,16 +15,37 @@ const CSV_FILES = {
     static3: 'data/static/csv/Peri_piscine_18x26_30cm_30s_10hz.csv',
 }
 
+
+db.prepare("CREATE TABLE IF NOT EXISTS positions (id INTEGER PRIMARY KEY AUTOINCREMENT, matchid TEXT, anchor TEXT, x REAL, y REAL, z REAL, precision REAL, time REAL)").run();
+
+const stmt = db.prepare("INSERT INTO positions (matchid, anchor, x, y, z, precision, time) VALUES (?, ?, ?, ?, ?, ?, ?)");
+for (const key in CSV_FILES) {
+    const row = db.prepare("SELECT * FROM positions WHERE matchid = ?").get(key);
+    if (!row) {
+        const file = CSV_FILES[key];
+        fs.createReadStream(file).pipe(parse({ delimiter: ";", columns: true })).on('data', (row) => {
+            if (row['X'] == 'nan') row['X'] = null;
+            if (row['Y'] == 'nan') row['Y'] = null;
+            if (row['Z'] == 'nan') row['Z'] = null;
+            if (row['Precision %'] == 'nan') row['Precision %'] = null;
+            stmt.run(key, row['Ancre'], row['X'], row['Y'], row['Z'], row['Precision %'], row['temps_ms'] / 1000);
+        });
+    }
+}
+
+// count the number of rows in the table
+let row = db.prepare("SELECT COUNT(*) AS count FROM positions").get()
+console.log(`number of rows in the table: ${row.count}`);
+
 const wss = new WebSocket.Server({ port: WS_PORT });
 console.log(`ws server running on port ${WS_PORT}`);
 
 
 wss.on('connection', (ws, request) => {
     let currentStream = null;
-    let previousData = {};
     console.log('new ws client');
     let options = new URL(`http://localhost${request.url}`).searchParams;
-    let file = CSV_FILES[options.get('file')] ?? CSV_FILES.dynamic1;
+    let file = options.get('file') ?? 'dynamic1';
 
     sendTime(ws, file);
 
@@ -47,66 +69,50 @@ wss.on('connection', (ws, request) => {
     });
 
     async function sendCSVstartTimestamp(ws, file, startTimestamp, id) {
-        const parser = fs.createReadStream(file)
-        .pipe(parse({ delimiter: ";", columns: true }))
-    
-        let shouldStartSending = false;
-    
-        for await (const row of parser) {
+        const stmt = db.prepare(`SELECT *,
+            time - prev_time AS acquisition_time,
+            SQRT(POW(x - prev_x, 2) + POW(y - prev_y, 2)) / (time - prev_time) as speed,
+            ATAN2(y - prev_y, x - prev_x) as direction
+            FROM (
+                SELECT *,
+                time - LAG(time) OVER (PARTITION BY matchid ORDER BY time) AS sleep_time,
+                LAG(x) OVER (PARTITION BY matchid, anchor ORDER BY time) as prev_x,
+                LAG(y) OVER (PARTITION BY matchid, anchor ORDER BY time) as prev_y,
+                LAG(time) OVER (PARTITION BY matchid, anchor ORDER BY time) as prev_time
+                FROM positions
+                WHERE matchid = ?
+                AND time >= ?
+                ORDER BY time
+            )
+        `);
+
+        for (const row of stmt.iterate(file, startTimestamp)) {
             if (currentStream !== id) {
-                //console.log(currentStream, id);
                 return;
             }
-            let anchor = row['Ancre'];
-            let currentX = parseFloat(row['X']);
-            let currentY = parseFloat(row['Y']);
-            let currentZ = parseFloat(row['Z']);
-            const rowTimestamp = Number(+row['temps_ms'].replace(/\u202F/g, '')) / 1000;
-            if (!shouldStartSending) {
-                //const rowTimestamp = +row['temps_ms'];
-                if (rowTimestamp >= startTimestamp) {
-                    shouldStartSending = true;
-                } else {
-                    continue;
-                }
+
+            if (row['sleep_time']) {
+                await delay(row['sleep_time'] * 1000);
             }
-
-            let speed = 0;
-
-            if (!isNaN(currentX) && !isNaN(currentY) && !isNaN(rowTimestamp)) {
-                if (previousData[anchor]) {
-                    let distance = Math.sqrt(Math.pow(currentX - previousData[anchor].x, 2) + Math.pow(currentY - previousData[anchor].y, 2));
-                    let timeDifference = rowTimestamp - previousData[anchor].time;
-
-                    if (timeDifference > 0) {
-                        speed = distance / timeDifference;
-                    }
-                }
-
-                previousData[anchor] = {
-                    x: currentX,
-                    y: currentY,
-                    time: rowTimestamp
-                };
-            }
+            console.log(row['time']);
     
-            const data = {
-                time: rowTimestamp,
-                anchor: row['Ancre'], //anchor
-                x: +row['X'], //currentX
-                y: +row['Y'], //currentY
-                z: +row['Z'], //currentZ
-                precision: +row['Precision %'],
-                instant_speed: speed
-            }
-    
-            ws.send(JSON.stringify(data));
-    
-            await delay(row['Temps_acquisition']);
+            ws.send(JSON.stringify({
+                time: row['time'],
+                acquisition_time: row['acquisition_time'],
+                anchor: row['anchor'],
+                x: row['x'],
+                y: row['y'],
+                z: row['z'],
+                precision: row['precision'],
+                speed: row['speed'],
+                direction: row['direction']
+            }));
         }
+
         currentStream = Math.random().toString(16);
         sendCSVstartTimestamp(ws, file, startTimestamp, currentStream);
-    }
+    };
+        
 });
 
 wss.on('error', (err) => {
@@ -211,28 +217,13 @@ function sendPosForTimestamp(ws, file, timestamp) {
 
 function sendTime(ws, file) {
     // Read the time for the first and last row
-    fs.readFile(file, 'utf8', (err, data) => {
-        if (err) {
-            console.error(`Error reading file: ${err}`);
-            return;
+    let first = db.prepare("SELECT time FROM positions WHERE matchid = ? ORDER BY time ASC LIMIT 1").get(file);
+    let last = db.prepare("SELECT time FROM positions WHERE matchid = ? ORDER BY time DESC LIMIT 1").get(file);
+
+    ws.send(JSON.stringify({
+        TimeData: {
+            firstTime: first.time * 1000,
+            lastTime: last.time * 1000
         }
-
-        const rows = data.split('\n');
-        const firstRow = rows[1]; // Assuming the first row is the header
-        const lastRow = rows[rows.length - 2]; // Assuming the last row is empty
-        
-        const firstTime = Number(firstRow.split(';')[1].replace(/\u202F/g, ''));
-        const lastTime = Number(lastRow.split(';')[1].replace(/\u202F/g, ''));
-        
-        const timeData = {
-            TimeData: {
-              firstTime: firstTime,
-              lastTime: lastTime
-            }
-          };
-
-        
-
-        ws.send(JSON.stringify(timeData));
-    });
+    }));
 }

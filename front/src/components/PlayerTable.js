@@ -46,6 +46,25 @@ const PlayerTable = ({ value }) => {
         setPlayers(updatedPlayers);
     };
 
+    const handleValidation = () => {
+        const hasDuplicateNumber = players.some((player, index) => 
+            player.number !== "" && players.findIndex(p => p.number === player.number) !== index
+        );
+    
+        const hasDuplicateName = players.some((player, index) => 
+            player.name !== "" && players.findIndex(p => p.name === player.name) !== index
+        );
+    
+        if (hasDuplicateNumber || hasDuplicateName) {
+            console.log("There are duplicate numbers or names.");
+            // Handle the case where duplicates are found
+            // For example, you could show an error message to the user
+        } else {
+            console.log("No duplicates found.");
+            // Proceed with the validation as all players have unique numbers and names
+        }
+    };
+
     return (
         <div>
             <table>
@@ -60,6 +79,7 @@ const PlayerTable = ({ value }) => {
                     {renderTableRows()}
                 </tbody>
             </table>
+            <button onClick={handleValidation}>Valider</button>
         </div>
     );
 };

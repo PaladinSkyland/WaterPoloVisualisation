@@ -5,6 +5,7 @@ import WaterpoloPoolLength from './WaterpoloPoolLength';
 import WaterpoloPoolWidth from './WaterpoloPoolWidth';
 import Player from './Player';
 import PlayerLink from './PlayerLink';
+import Ancre from './Ancre';
 
 function SwimmingPool(props){
     const stageRef = useRef(null);
@@ -180,6 +181,7 @@ function SwimmingPool(props){
                                 )
                             )}
                         </Layer>
+                        {props.className === 'settings' && <Ancre settings={props.settings}/>}
                     </Stage>
                 </div>
             </div>

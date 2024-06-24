@@ -41,7 +41,7 @@ useEffect(() => {
   let content
   switch (activeTab) {
     case 'pool':
-      content = <SwimmingPool className="main" pool={pool} settings={settings}/>;
+      content = <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />;
       break;
     case 'settings':
       content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;

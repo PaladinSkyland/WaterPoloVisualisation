@@ -80,8 +80,8 @@ function Settings({ pool, settings, setSettings }) {
             <div className='gender-container'>
                 <Gender value={settings.gender} handleChange={handleValueChange} />
             </div>
-    
-            <SwimmingPool className="settings" pool={pool} settings={settings} />
+            
+            <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
             
 
         </div>

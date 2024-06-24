@@ -78,15 +78,21 @@ function SwimmingPool(props){
                     });
                 }
                 else {
-                    const scaleX = containerWidth / (props.pool.getPoolWidth());
-                    const scaleY = containerHeight / (props.pool.getPoolHeight());
+                    let marginx = 0;
+                    let marginy = 0;
+                    if (props.isSettings) {
+                        marginx = 2;
+                        marginy = 2;
+                    }
+                    const scaleX = containerWidth / (props.pool.getPoolWidth() + 2 * marginx);
+                    const scaleY = containerHeight / (props.pool.getPoolHeight() + 2 * marginy);
                     const scale = Math.min(scaleX, scaleY);
                     setDimensions({
-                        width: props.pool.getPoolWidth() * scale,
-                        height: props.pool.getPoolHeight() * scale,
+                        width: (props.pool.getPoolWidth() + 2 * marginx) * scale,
+                        height: (props.pool.getPoolHeight() + 2 * marginy) * scale,
                         scale: scale,
-                        offsetX: 0,
-                        offsetY: 0,
+                        offsetX: marginx * scale,
+                        offsetY: marginy * scale,
                         rotation: 0,
                         fontSize: 0.5
                     });

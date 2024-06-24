@@ -5,6 +5,7 @@ import Pool from './class/Pool';
 import React, { useEffect, useState } from 'react';
 import NavBar from './components/NavBar';
 import Settings from './components/Settings';
+import ProgressBar from './components/ProgressBar';
 
 function App() {
   const address = 'ws://localhost:8080?file=dynamic5';
@@ -68,8 +69,12 @@ useEffect(() => {
 
     newWs.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      console.log(data);
       if (data.TimeData) {
         setMinMaxTime([data.TimeData.firstTime / 1000, data.TimeData.lastTime / 1000]);
+      }
+      if (data.time) {
+        setProgress(data.time);
       }
       if (data.x && data.y) {
         const { time, anchor, x, y, z, precision } = data;
@@ -102,18 +107,6 @@ useEffect(() => {
     };
   }, []);
 
-    useEffect(() => {
-    const interval = setInterval(() => {
-      if (progress < maxtime) {
-        setProgress(progress + 1);
-        console.log(progress);
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [progress, maxtime, ws]);
   
 
   const handleChangeProgress = (event) => {
@@ -128,13 +121,7 @@ useEffect(() => {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab}/>
           <div className="content">
             {content}
-            <input
-          type="range"
-          min={mintime}
-          max={maxtime}
-          value={progress}
-          onChange={handleChangeProgress}
-          />
+
           </div>
         </div>
       ) : (

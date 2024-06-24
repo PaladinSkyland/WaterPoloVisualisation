@@ -22,6 +22,7 @@
 }
 
 .stage-container.settings{
+    margin-top: 2vh;
     width: 100%;
     height: 60dvh;
     display: flex;

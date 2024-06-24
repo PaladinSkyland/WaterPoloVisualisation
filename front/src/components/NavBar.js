@@ -1,10 +1,12 @@
 import React from 'react';
 import '../css/NavBar.css';
+import Zone from './Zone';
 
-function NavBar({ activeTab, setActiveTab }) {
+function NavBar({ activeTab, setActiveTab, settings, setSettings }) {
 
   return (
     <div className='NavBar'>
+      <div className='tab-container'>
       <img
         className={`logo ${activeTab === 'pool' ? 'clicked' : ''}`}
         src={process.env.PUBLIC_URL + '/assets/pool.svg'}
@@ -23,7 +25,12 @@ function NavBar({ activeTab, setActiveTab }) {
         alt="statistics logo"
         onClick={() => setActiveTab('statistics')}
       />
+      </div>
+      <div className='zone'>
+        {activeTab === 'pool' && <Zone value={settings.zone} settings={settings} setSettings={setSettings}></Zone>}
+      </div>
     </div>
+    
   );
 }
 

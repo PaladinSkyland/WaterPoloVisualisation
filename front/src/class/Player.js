@@ -8,7 +8,7 @@ class Player {
       this.z = z;
       this.precision = precision;
       this.speed = speed;
-      this.direction = this.direction;
+      this.direction = direction;
       this.selected = false;
     }
 }

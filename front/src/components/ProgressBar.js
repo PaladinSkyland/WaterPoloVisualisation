@@ -5,7 +5,7 @@ class ProgressBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        isPlaying: false,
+        isPlaying: true,
       };
     this.progressBarRef = React.createRef();
   }
@@ -16,6 +16,11 @@ class ProgressBar extends Component {
     const offsetX = e.nativeEvent.offsetX;
     const newProgress = offsetX / progressWidth * (maxTime - minTime) + minTime;
     handleChange(newProgress);
+    if (!this.state.isPlaying) {
+      this.setState({
+        isPlaying: true,
+      });
+    }
   }
 
   togglePlayPause = () => {

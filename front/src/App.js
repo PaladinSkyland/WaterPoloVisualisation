@@ -27,7 +27,6 @@ function App() {
   if (settings.match === undefined) {
     settings.match = 'dynamic5';
   }
-  var adress_param = "?file="+settings.match;
 
 useEffect(() => {
   setPool((currentPool) => {
@@ -74,38 +73,12 @@ useEffect(() => {
   }, [settings]);
 
   useEffect(() => {
-    if (ws !== null && settings.match !== undefined) {
-      ws.close();
-
-      adress_param="?file="+settings.match;
-      setPool((currentPool) => {
-        const newPool = Object.create(
-          Object.getPrototypeOf(currentPool),
-          Object.getOwnPropertyDescriptors(currentPool)
-        );
-        newPool.removeallplayer();
-        return newPool;
-      });
-      newWS();
-    }
-  }, [settings.match]);
-
-  useEffect(() => {
-    const newWs = newWS();
-
-    return () => {
-      newWs.close();
-    };
-
-  }, []);
-
-  function newWS() {
-    const newWs = new WebSocket(address + adress_param); // Adresse du serveur WebSocket
+    const newWs = new WebSocket(`${address}?file=${settings.match}`); // Adresse du serveur WebSocket
     setWs(newWs);
     
-    newWs.addEventListener('open', () => {
+    newWs.onopen = () => {
       newWs.send(JSON.stringify({ timestamp: 0}));
-    });
+    };
 
     newWs.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -128,8 +101,21 @@ useEffect(() => {
         });
       }
     };
-    return newWs;
-  }
+
+    return () => {
+      newWs.close();
+      
+      setPool((currentPool) => {
+        const newPool = Object.create(
+          Object.getPrototypeOf(currentPool),
+          Object.getOwnPropertyDescriptors(currentPool)
+        );
+        newPool.removeallplayer();
+        return newPool;
+      });
+    };  
+  }, [settings.match]);
+
 
   const [isLandscape, setIsLandscape] = useState(window.matchMedia("(orientation: landscape)").matches);
 

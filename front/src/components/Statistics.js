@@ -5,14 +5,15 @@ const Statistics = (props) => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:8080/stats/${props.settings.match}`);
+            const data = await response.json();
+            setPlayers(data);
+        };
+
         fetchData();
-    }, []);
+    }, [props.settings.match]);
     
-    const fetchData = async () => {
-        const response = await fetch(`http://localhost:8080/stats/${props.settings.match}`);
-        const data = await response.json();
-        setPlayers(data);
-    };
 
     const formatTime = (time) => {
         const hours = Math.floor(time / 3600).toString().padStart(2, '0');

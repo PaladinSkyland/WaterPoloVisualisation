@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import NavBar from './components/NavBar';
 import Settings from './components/Settings';
 import ProgressBar from './components/ProgressBar';
+import Statistics from './components/Statistics';
 
 function App() {
   const address = 'ws://localhost:8080';
@@ -61,7 +62,7 @@ useEffect(() => {
       content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;
       break;
     case 'statistics':
-        content = <p> test</p>;
+        content = <Statistics />;
         break;
     default:
       content = 'pool';

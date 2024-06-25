@@ -8,12 +8,8 @@ const PlayerTable = ({ value }) => {
     const [hasDuplicates, setHasDuplicates] = useState(false);
 
     useEffect(() => {
-        const initialPlayers = value.map(player => ({
-            ...player,
-            number: player.number || '',
-            name: player.name || ''
-        }));
-        setPlayers(initialPlayers);
+        setPlayers(value);
+        console.log(value);
     }, [value]);
 
     const renderTableRows = () => {

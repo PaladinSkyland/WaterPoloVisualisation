@@ -2,7 +2,9 @@ const WebSocket = require('ws');
 const fs = require('fs');
 const { parse } = require("csv-parse");
 const db = require('better-sqlite3')('data/db.sqlite');
+const express = require('express')
 
+const EXPRESS_PORT = 3000
 const WS_PORT = 8080
 const CSV_FILES = {
     dynamic1: 'data/dynamic/csv/Test_1_brasse_10Hz_aller-retour_vidéo.csv',
@@ -228,3 +230,13 @@ function sendTime(ws, file) {
         }
     }));
 }
+const app = express()
+
+app.get('/matchs', (req, res) => {
+    const stmt = db.prepare("SELECT DISTINCT matchid FROM positions");
+    res.send(stmt.all().map(row => row.matchid));
+})
+
+app.listen(EXPRESS_PORT, () => {
+  console.log(`REST API listening on port ${EXPRESS_PORT}`)
+})

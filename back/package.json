@@ -12,6 +12,7 @@
   "dependencies": {
     "better-sqlite3": "^11.0.0",
     "csv": "^6.3.8",
+    "express": "^4.19.2",
     "ws": "^8.17.0"
   }
 }

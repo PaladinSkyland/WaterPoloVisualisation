@@ -46,7 +46,12 @@ useEffect(() => {
   let content
   switch (activeTab) {
     case 'pool':
-      content = <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />;
+      content = content = (
+        <div>
+          <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />
+          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} play={play} pause={pause} />
+        </div>
+      );
       break;
     case 'settings':
       content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;

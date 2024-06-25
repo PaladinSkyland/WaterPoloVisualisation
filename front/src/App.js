@@ -9,7 +9,7 @@ import ProgressBar from './components/ProgressBar';
 
 function App() {
   const address = 'ws://localhost:8080';
-  var adress_param = "?file=dynamic5"
+  
 
   const [pool, setPool] = useState(new Pool());
   const [settings, setSettings] = useState(() => {
@@ -23,6 +23,10 @@ function App() {
       zone: 'pool',
     };
   });
+  if (settings.match === undefined) {
+    settings.match = 'dynamic5';
+  }
+  var adress_param = "?file="+settings.match;
 
 useEffect(() => {
   setPool((currentPool) => {

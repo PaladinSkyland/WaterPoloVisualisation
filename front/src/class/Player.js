@@ -10,6 +10,16 @@ class Player {
       this.speed = speed;
       this.direction = direction;
       this.selected = false;
+      this.number = null;
+      this.name = "";
+    }
+
+    setName(name) {
+      this.name = name;
+    }
+
+    setNumber(number) {
+      this.number = number;
     }
 }
 export default Player;

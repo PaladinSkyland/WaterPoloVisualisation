@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import '../css/PlayerTable.css';
 
 const PlayerTable = ({ value }) => {
     const [players, setPlayers] = useState([]);
+    const [duplicateNumbers, setDuplicateNumbers] = useState([]);
+    const [duplicateNames, setDuplicateNames] = useState([]);
+    const [hasDuplicates, setHasDuplicates] = useState(false);
 
     useEffect(() => {
-        const initialPlayers = value.map(player => {
-            player.number = player.number || '';
-            player.name = player.name || '';
-            return player;
-        });
+        const initialPlayers = value.map(player => ({
+            ...player,
+            number: player.number || '',
+            name: player.name || ''
+        }));
         setPlayers(initialPlayers);
     }, [value]);
 
@@ -20,6 +24,7 @@ const PlayerTable = ({ value }) => {
                     <input
                         type="number"
                         value={player.number}
+                        className={duplicateNumbers.includes(index) ? 'duplicate' : ''}
                         onChange={(e) => handleNumberChange(e, index)}
                     />
                 </td>
@@ -27,6 +32,7 @@ const PlayerTable = ({ value }) => {
                     <input
                         type="text"
                         value={player.name}
+                        className={duplicateNames.includes(index) ? 'duplicate' : ''}
                         onChange={(e) => handleNameChange(e, index)}
                     />
                 </td>
@@ -47,21 +53,46 @@ const PlayerTable = ({ value }) => {
     };
 
     const handleValidation = () => {
-        const hasDuplicateNumber = players.some((player, index) => 
-            player.number !== "" && players.findIndex(p => p.number === player.number) !== index
-        );
-    
-        const hasDuplicateName = players.some((player, index) => 
-            player.name !== "" && players.findIndex(p => p.name === player.name) !== index
-        );
-    
-        if (hasDuplicateNumber || hasDuplicateName) {
+        const numberMap = {};
+        const nameMap = {};
+        
+        players.forEach((player, index) => {
+            if (player.number) {
+                if (!numberMap[player.number]) {
+                    numberMap[player.number] = [];
+                }
+                numberMap[player.number].push(index);
+            }
+            if (player.name) {
+                if (!nameMap[player.name]) {
+                    nameMap[player.name] = [];
+                }
+                nameMap[player.name].push(index);
+            }
+        });
+
+        const duplicateNumbersIndices = Object.values(numberMap)
+            .filter(indices => indices.length > 1)
+            .flat();
+
+        const duplicateNamesIndices = Object.values(nameMap)
+            .filter(indices => indices.length > 1)
+            .flat();
+
+        setDuplicateNumbers(duplicateNumbersIndices);
+        setDuplicateNames(duplicateNamesIndices);
+
+        if (duplicateNumbersIndices.length || duplicateNamesIndices.length) {
+            setHasDuplicates(true);
             console.log("There are duplicate numbers or names.");
-            // Handle the case where duplicates are found
-            // For example, you could show an error message to the user
         } else {
+            setHasDuplicates(false);
             console.log("No duplicates found.");
-            // Proceed with the validation as all players have unique numbers and names
+            players.forEach((player, index) => {
+                value[index].setNumber(player.number);
+                value[index].setName(player.name);
+            });
+            console.log(value);
         }
     };
 
@@ -79,7 +110,10 @@ const PlayerTable = ({ value }) => {
                     {renderTableRows()}
                 </tbody>
             </table>
-            <button onClick={handleValidation}>Valider</button>
+            <div className="validation-container">
+                <button onClick={handleValidation}>Valider</button>
+                {hasDuplicates && <span className="error-message">There are duplicate inputs.</span>}
+            </div>
         </div>
     );
 };

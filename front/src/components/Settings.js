@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
 import SwimmingPool from './SwimmingPool';
@@ -7,10 +7,10 @@ import SelectMatchs from './SelectMatchs';
 
 function Settings({ pool, settings, setSettings }) {
 
-    const maxHorizontalLimit = settings.gender === "male" ? 18 : 23
-    const minHorizontalLimit = 1.75
-    const maxVerticalLimit = 4
-    const minVerticalLimit = 0
+    const maxHorizontalLimit = settings.gender === "male" ? 18 : 23;
+    const minHorizontalLimit = 1.75;
+    const maxVerticalLimit = 4;
+    const minVerticalLimit = 0;
 
     const handleNumberChange = (event) => {
         const { name, value } = event.target;
@@ -32,8 +32,8 @@ function Settings({ pool, settings, setSettings }) {
         setSettings({
             ...settings,
             [name]: isNaN(newValue) ? 0 : newValue
-        })
-    }
+        });
+    };
 
     const handleValueChange = e => {
         console.log(e.target.value);
@@ -42,7 +42,7 @@ function Settings({ pool, settings, setSettings }) {
             ...settings,
             [e.target.name]: e.target.value
         });
-    }
+    };
 
     return (
         <div>

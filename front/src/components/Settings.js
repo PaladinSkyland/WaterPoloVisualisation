@@ -5,7 +5,6 @@ import SwimmingPool from './SwimmingPool';
 import PlayerTable from './PlayerTable';
 
 function Settings({ pool, settings, setSettings }) {
-    const [players, setPlayers] = useState(pool.players);
 
     const maxHorizontalLimit = settings.gender === "male" ? 18 : 23;
     const minHorizontalLimit = 1.75;
@@ -40,11 +39,6 @@ function Settings({ pool, settings, setSettings }) {
             ...settings,
             [e.target.name]: e.target.value
         });
-    };
-
-    const handleUpdatePlayers = (updatedPlayers) => {
-        setPlayers(updatedPlayers);
-        console.log(players);
     };
 
     return (
@@ -88,7 +82,7 @@ function Settings({ pool, settings, setSettings }) {
             </div>
             
             <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
-            <PlayerTable value={players} onUpdatePlayers={handleUpdatePlayers} />
+            <PlayerTable value={pool.players} />
         </div>
     );
 }

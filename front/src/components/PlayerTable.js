@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/PlayerTable.css';
 
-const PlayerTable = ({ value, onUpdatePlayers }) => {
+const PlayerTable = ({ value }) => {
     const [players, setPlayers] = useState([]);
     const [duplicateNumbers, setDuplicateNumbers] = useState([]);
     const [duplicateNames, setDuplicateNames] = useState([]);
@@ -88,7 +88,11 @@ const PlayerTable = ({ value, onUpdatePlayers }) => {
         } else {
             setHasDuplicates(false);
             console.log("No duplicates found.");
-            onUpdatePlayers(players);
+            players.forEach((player, index) => {
+                value[index].setNumber(player.number);
+                value[index].setName(player.name);
+            });
+            console.log(value);
         }
     };
 

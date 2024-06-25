@@ -62,7 +62,7 @@ useEffect(() => {
       content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;
       break;
     case 'statistics':
-        content = <Statistics />;
+        content = <Statistics settings={settings} />;
         break;
     default:
       content = 'pool';

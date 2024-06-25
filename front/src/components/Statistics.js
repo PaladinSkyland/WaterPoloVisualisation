@@ -9,7 +9,7 @@ const Statistics = (props) => {
     }, []);
     
     const fetchData = async () => {
-        const response = await fetch('http://localhost:8080/stats/dynamic5');
+        const response = await fetch(`http://localhost:8080/stats/${props.settings.match}`);
         const data = await response.json();
         setPlayers(data);
     };

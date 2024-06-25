@@ -105,7 +105,7 @@ function SwimmingPool(props){
         window.addEventListener('resize', fitStageIntoParentContainer);
     
         return () => {window.removeEventListener('resize', fitStageIntoParentContainer)};
-    }, [props.pool, props.settings]);
+    }, [props.pool, props.settings, props.isSettings]);
     
     const handleClick = (e) => {
         if (e.target.attrs.className?.includes("player")) {

@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Group, Circle, Text, Arrow, Arc } from 'react-konva';
 import { Animation } from 'konva';
 
 function Player(props) {
     const { innerRef, player, index, fontSize } = props;
-    let [time, setTime] = useState(0);
 
     const playerRef = innerRef;
     const spinnerRef = useRef(null);
@@ -22,7 +21,6 @@ function Player(props) {
                 duration: player.acquisitionTime,
             });
         };
-        setTime(player.time);
     }, [playerRef, player.x, player.y, player.acquisitionTime]);
 
     useEffect(() => {

@@ -62,12 +62,12 @@ module.exports = function (server, db) {
             `);
 
             for (const row of stmt.iterate(matchid, startTimestamp)) {
-                if (currentStream !== id) {
-                    return;
-                }
-
                 if (row['sleep_time']) {
                     await delay(row['sleep_time'] * 1000);
+                }
+
+                if (currentStream !== id) {
+                    return;
                 }
         
                 ws.send(JSON.stringify({
@@ -82,11 +82,7 @@ module.exports = function (server, db) {
                     direction: row['direction']
                 }));
             }
-
-            currentStream = generateRandomID();
-            sendCSVstartTimestamp(ws, matchid, startTimestamp, currentStream);
-        };
-            
+        };     
     });
 
     wss.on('error', (err) => {

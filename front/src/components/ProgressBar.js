@@ -8,14 +8,12 @@ class ProgressBar extends Component {
         isPlaying: true,
       };
     this.progressBarRef = React.createRef();
+    this.sliderRef = React.createRef();
   }
 
   handleClick = (e) => {
-    const { minTime, maxTime, handleChange, play, pause} = this.props;
-    const progressWidth = this.progressBarRef.current.offsetWidth;
-    const offsetX = e.nativeEvent.offsetX;
-    const newProgress = offsetX / progressWidth * (maxTime - minTime) + minTime;
-    handleChange(newProgress);
+    this.props.pause();
+    this.props.handleChange(e.target.value);
     if (!this.state.isPlaying) {
       this.setState({
         isPlaying: true,
@@ -39,7 +37,6 @@ class ProgressBar extends Component {
   render() {
     const { minTime, maxTime, progress } = this.props;
     const { isPlaying } = this.state;
-    const percentage = ((progress - minTime) / (maxTime - minTime)) * 100;
     
     
     return (
@@ -52,14 +49,16 @@ class ProgressBar extends Component {
             />
           </button>
           <div className="progress-bar-wrapper" ref={this.progressBarRef} onClick={this.handleClick}>
-            <div className="progress-bar" style={{ width: `${percentage}%` }}>
-              <div className="progress-label" style={{ left: `${percentage}%` }}>{progress.toFixed(2)}</div>
-              <div className="progress-circle" style={{ left: `${percentage}%` }}></div>
+          <div id="progress-track-container">
+              <input id="progress-track" type="range" min={minTime} max={maxTime} step='0.1' value={progress} onChange={this.handleClick} />
             </div>
+            <input id="progress-thumb" type="range" min={minTime} max={maxTime} step='0.1' value={progress} onChange={this.handleClick} />
+            <input id="progress-label" type="range" min={minTime} max={maxTime} step='0.1' value={progress} readOnly
+              style={{"--bg-image": `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' height='11px' width='22px'><text text-anchor='middle' x='11' y='11' fill='black' font-size='5' font-family='Sans,Arial'>${progress.toFixed(2)}</text></svg>")`}}
+            />
           </div>
           <div className="max-time-label">{maxTime.toFixed(2)}</div>
         </div>
-        
       </div>
     );
   }

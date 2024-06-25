@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
 import SwimmingPool from './SwimmingPool';

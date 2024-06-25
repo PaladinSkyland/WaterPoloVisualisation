@@ -45,7 +45,12 @@ useEffect(() => {
   let content
   switch (activeTab) {
     case 'pool':
-      content = <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />;
+      content = (
+        <div>
+          <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />
+          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} play={play} pause={pause} />
+        </div>
+      );
       break;
     case 'settings':
       content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;
@@ -132,7 +137,6 @@ useEffect(() => {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab} settings={settings} setSettings={setSettings}/>
           <div className="content">
             {content}
-          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} play={play} pause={pause} />
           </div>
         </div>
       ) : (

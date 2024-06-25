@@ -3,6 +3,7 @@ import Distance from './Distance';
 import Gender from './Gender';
 import SwimmingPool from './SwimmingPool';
 import PlayerTable from './PlayerTable';
+import SelectMatchs from './SelectMatchs';
 
 function Settings({ pool, settings, setSettings }) {
 
@@ -35,6 +36,8 @@ function Settings({ pool, settings, setSettings }) {
     }
 
     const handleValueChange = e => {
+        console.log(e.target.value);
+        console.log(e.target.name);
         setSettings({
             ...settings,
             [e.target.name]: e.target.value
@@ -83,6 +86,7 @@ function Settings({ pool, settings, setSettings }) {
             
             <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
             <PlayerTable value={pool.players} />
+            <SelectMatchs value={settings.players} />
 
         </div>
     );

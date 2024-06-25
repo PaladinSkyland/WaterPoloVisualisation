@@ -10,6 +10,8 @@ class Player {
       this.speed = speed;
       this.direction = this.direction;
       this.selected = false;
+      this.number = null;
+      this.name = "";
     }
 }
 export default Player;

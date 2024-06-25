@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Distance from './Distance';
 import Gender from './Gender';
 import SwimmingPool from './SwimmingPool';
 import PlayerTable from './PlayerTable';
 
 function Settings({ pool, settings, setSettings }) {
+    const [players, setPlayers] = useState(pool.players);
 
-    const maxHorizontalLimit = settings.gender === "male" ? 18 : 23
-    const minHorizontalLimit = 1.75
-    const maxVerticalLimit = 4
-    const minVerticalLimit = 0
+    const maxHorizontalLimit = settings.gender === "male" ? 18 : 23;
+    const minHorizontalLimit = 1.75;
+    const maxVerticalLimit = 4;
+    const minVerticalLimit = 0;
 
     const handleNumberChange = (event) => {
         const { name, value } = event.target;
@@ -31,15 +32,20 @@ function Settings({ pool, settings, setSettings }) {
         setSettings({
             ...settings,
             [name]: isNaN(newValue) ? 0 : newValue
-        })
-    }
+        });
+    };
 
     const handleValueChange = e => {
         setSettings({
             ...settings,
             [e.target.name]: e.target.value
         });
-    }
+    };
+
+    const handleUpdatePlayers = (updatedPlayers) => {
+        setPlayers(updatedPlayers);
+        console.log(players);
+    };
 
     return (
         <div>
@@ -82,8 +88,7 @@ function Settings({ pool, settings, setSettings }) {
             </div>
             
             <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
-            <PlayerTable value={pool.players} />
-
+            <PlayerTable value={players} onUpdatePlayers={handleUpdatePlayers} />
         </div>
     );
 }

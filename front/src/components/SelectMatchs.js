@@ -5,19 +5,19 @@ function SelectMatchs({ value, handleChange }) {
     const [options, setOptions] = useState([]);
 
     useEffect(() => {
-        // Make an API call to fetch the options
-        fetch('http://localhost:2000/matchs')
-            .then(response => response.json())
-            .then(data => setOptions(data))
-            .catch(error => console.log(error));
+        async function fetchData() {
+            // Make an API call to fetch the options
+            const response = await fetch('http://localhost:8080/matchs');
+            const data = await response.json();
+            setOptions(data);
+        }
+        fetchData();
     }, []);
 
     return (
-        <select value={value} onChange={handleChange}>
-            {options.map(option => (
-                <option key={option.id} value={option.value}>
-                    {option.label}
-                </option>
+        <select name="match" value={value} onChange={handleChange}>
+            {options.map((option, index) => (
+                <option key={index} value={option}>{option}</option>
             ))}
         </select>
     );

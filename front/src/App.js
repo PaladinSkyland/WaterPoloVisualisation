@@ -8,7 +8,8 @@ import Settings from './components/Settings';
 import ProgressBar from './components/ProgressBar';
 
 function App() {
-  const address = 'ws://localhost:8080?file=dynamic5';
+  const address = 'ws://localhost:8080';
+  var adress_param = "?file=dynamic5"
 
   const [pool, setPool] = useState(new Pool());
   const [settings, setSettings] = useState(() => {
@@ -45,12 +46,7 @@ useEffect(() => {
   let content
   switch (activeTab) {
     case 'pool':
-      content = (
-        <div>
-          <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />
-          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} play={play} pause={pause} />
-        </div>
-      );
+      content = <SwimmingPool className="main" pool={pool} settings={settings} isSettings={false} />;
       break;
     case 'settings':
       content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;
@@ -68,7 +64,33 @@ useEffect(() => {
   }, [settings]);
 
   useEffect(() => {
-    const newWs = new WebSocket(address); // Adresse du serveur WebSocket
+    if (ws !== null && settings.match !== undefined) {
+      ws.close();
+
+      adress_param="?file="+settings.match;
+      setPool((currentPool) => {
+        const newPool = Object.create(
+          Object.getPrototypeOf(currentPool),
+          Object.getOwnPropertyDescriptors(currentPool)
+        );
+        newPool.removeallplayer();
+        return newPool;
+      });
+      newWS();
+    }
+  }, [settings.match]);
+
+  useEffect(() => {
+    const newWs = newWS();
+
+    return () => {
+      newWs.close();
+    };
+
+  }, []);
+
+  function newWS() {
+    const newWs = new WebSocket(address + adress_param); // Adresse du serveur WebSocket
     setWs(newWs);
     
     newWs.addEventListener('open', () => {
@@ -96,12 +118,8 @@ useEffect(() => {
         });
       }
     };
-  
-    return () => {
-      newWs.close();
-    };
-
-  }, []);
+    return newWs;
+  }
 
   const [isLandscape, setIsLandscape] = useState(window.matchMedia("(orientation: landscape)").matches);
 

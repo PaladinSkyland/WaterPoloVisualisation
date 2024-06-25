@@ -76,5 +76,9 @@ class Pool {
             player.direction = direction;
         }
     }
+
+    removeallplayer(){
+        this.players = [];
+    }
 }
 export default Pool;

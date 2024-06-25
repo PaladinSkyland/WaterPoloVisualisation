@@ -86,7 +86,7 @@ function Settings({ pool, settings, setSettings }) {
             
             <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
             <PlayerTable value={pool.players} />
-            <SelectMatchs value={settings.players} />
+            <SelectMatchs value={settings.players} handleChange={handleValueChange}/>
 
         </div>
     );

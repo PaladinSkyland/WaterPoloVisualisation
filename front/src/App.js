@@ -5,6 +5,7 @@ import Pool from './class/Pool';
 import React, { useEffect, useState } from 'react';
 import NavBar from './components/NavBar';
 import Settings from './components/Settings';
+import ProgressBar from './components/ProgressBar';
 
 function App() {
   const address = 'ws://localhost:8080?file=dynamic5';
@@ -71,8 +72,12 @@ useEffect(() => {
 
     newWs.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      //console.log(data);
       if (data.TimeData) {
         setMinMaxTime([data.TimeData.firstTime / 1000, data.TimeData.lastTime / 1000]);
+      }
+      if (data.time) {
+        setProgress(data.time);
       }
       if (data.x && data.y) {
         const { time, acquisitionTime, anchor, x, y, z, precision, speed, direction } = data;
@@ -105,24 +110,20 @@ useEffect(() => {
     };
   }, []);
 
-    useEffect(() => {
-    const interval = setInterval(() => {
-      if (progress < maxtime) {
-        setProgress(progress + 1);
-        console.log(progress);
-      }
-    }, 1000);
+  function handleChange(newProgress) {
+    ws.send(JSON.stringify({ timestamp: parseFloat(newProgress) }));
+    setProgress(parseInt(newProgress));
+  }
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [progress, maxtime, ws]);
-  
+  function play() {
+    ws.send(JSON.stringify({ play: true , timestamp: parseFloat(progress) }));
+    //console.log('play');
+  }
 
-  const handleChangeProgress = (event) => {
-    ws.send(JSON.stringify({ timestamp: parseFloat(event.target.value)}));
-    setProgress(parseInt(event.target.value));
-  };
+  function pause() {
+    ws.send(JSON.stringify({ pause: true }));
+    //console.log('pause');
+  }
 
   return (
     <div className="App">
@@ -131,13 +132,7 @@ useEffect(() => {
           <NavBar activeTab={activeTab} setActiveTab={setActiveTab} settings={settings} setSettings={setSettings}/>
           <div className="content">
             {content}
-            <input
-          type="range"
-          min={mintime}
-          max={maxtime}
-          value={progress}
-          onChange={handleChangeProgress}
-          />
+          <ProgressBar minTime={mintime} maxTime={maxtime} progress={progress} handleChange={handleChange} play={play} pause={pause} />
           </div>
         </div>
       ) : (

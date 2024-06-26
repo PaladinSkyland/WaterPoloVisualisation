@@ -12,6 +12,19 @@ const CSV_FILES = {
     static1: 'data/static/csv/Peri_piscine_2x26_30cm_30s_10hz.csv',
     static2: 'data/static/csv/Peri_piscine_4x26_30cm_30s_10hz.csv',
     static3: 'data/static/csv/Peri_piscine_18x26_30cm_30s_10hz.csv',
+    news1: 'data/news/csv/Test_1_scénario-1_marche_2-tags.csv',
+    news2: 'data/news/csv/Test_2_scénario-1_marche_2-tags.csv',
+    news3: 'data/news/csv/Test_3_scénario-1_marche_2-tags.csv',
+    news4: 'data/news/csv/Test_4_marche_1-tags.csv',
+    news5: 'data/news/csv/Test_5_marche_1-tags.csv',
+    news6: 'data/news/csv/Test_6_scénario-1_marche_2-tags.csv',
+    news7: 'data/news/csv/Test_7_scénario-1_marche_2-tags.csv',
+    news8: 'data/news/csv/Test_8_scénario-2-1-a_marche-aller_3-tags.csv',
+    news9: 'data/news/csv/Test_9_scénario-2-1-a_marche-retour_3-tags.csv',
+    news16: 'data/news/csv/Test_16_scénario-2-2_marche-libre_45s_3-tags.csv',
+    news17: 'data/news/csv/Test_17_scénario-2-2_marche-libre_45s_3-tags.csv',
+    news18: 'data/news/csv/Test_18_scénario-2-3_marche-libre-accélération-décélration_45s_3-tags.csv',
+    news19: 'data/news/csv/Test_19_scénario-2-3_marche-libre-accélération-décélration_45s_3-tags.csv'
 }
 
 require('./db.init')(db, CSV_FILES);

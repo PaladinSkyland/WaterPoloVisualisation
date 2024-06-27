@@ -1,0 +1,15 @@
+.duplicate {
+    border: 2px solid red;
+    background-color: #fdd;
+}
+
+.validation-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+    margin-left: 10px;
+}

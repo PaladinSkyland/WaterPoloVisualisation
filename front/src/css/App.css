@@ -1,0 +1,13 @@
+.portrait {
+    height: 100dvh;
+    width: 100%;
+    text-align: center;
+    line-height: 100dvh;
+}
+body, html {
+    background-color: #EFF4F8;
+  }
+
+.content {
+    margin-left: 5%;
+}

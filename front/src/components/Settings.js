@@ -45,51 +45,65 @@ function Settings({ pool, settings, setSettings }) {
     };
 
     return (
-        <div>
-            <div className='distance-container'>
-                <div className='margin-container'>
-                    <Distance
-                        label="Marge verticale"
-                        name="margeV"
-                        value={settings.margeV}
-                        step="0.1"
-                        handleChange={handleNumberChange}
-                    />
-                    <Distance
-                        label="Marge horizontale"
-                        name="margeH"
-                        value={settings.margeH}
-                        step="0.1"
-                        handleChange={handleNumberChange}
-                    />
+        <div className="settings-container">
+            <div className='section terrain-management'>
+                <h2>Gestion du terrain</h2>
+                <div className='distance-container'>
+                    <div className='margin-container'>
+                        <Distance
+                            label="Marge verticale"
+                            name="margeV"
+                            value={settings.margeV}
+                            step="0.1"
+                            handleChange={handleNumberChange}
+                        />
+                        <Distance
+                            label="Marge horizontale"
+                            name="margeH"
+                            value={settings.margeH}
+                            step="0.1"
+                            handleChange={handleNumberChange}
+                        />
+                    </div>
+                    <div className='margin-container'>
+                        <Distance
+                            label="Ancre verticale"
+                            name="ancreV"
+                            value={settings.ancreV}
+                            step="0.1"
+                            handleChange={handleNumberChange}
+                        />
+                        <Distance
+                            label="Ancre horizontale"
+                            name="ancreH"
+                            value={settings.ancreH}
+                            step="0.1"
+                            handleChange={handleNumberChange}
+                        />
+                    </div>
                 </div>
-                <div className='margin-container'>
-                    <Distance
-                        label="Ancre verticale"
-                        name="ancreV"
-                        value={settings.ancreV}
-                        step="0.1"
-                        handleChange={handleNumberChange}
-                    />
-                    <Distance
-                        label="Ancre horizontale"
-                        name="ancreH"
-                        value={settings.ancreH}
-                        step="0.1"
-                        handleChange={handleNumberChange}
-                    />
+                <div className='gender-container'>
+                    <Gender value={settings.gender} handleChange={handleValueChange} />
                 </div>
             </div>
-            <div className='gender-container'>
-                <Gender value={settings.gender} handleChange={handleValueChange} />
+    
+            <div className='section match-selection'>
+                <h2>Sélection des matchs</h2>
+                <SelectMatchs value={settings.match} handleChange={handleValueChange} />
             </div>
-            
-            <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
-            <PlayerTable value={pool.players} />
-            <SelectMatchs value={settings.match} handleChange={handleValueChange}/>
-
+    
+            <div className='section terrain-preview'>
+                <h2>Prévisualisation du terrain</h2>
+                <SwimmingPool className="settings" pool={pool} settings={settings} isSettings={true} />
+            </div>
+    
+            <div className='section player-table'>
+                <h2>Tableau des joueurs</h2>
+                <PlayerTable value={pool.players} />
+            </div>
         </div>
     );
+    
 }
 
 export default Settings;

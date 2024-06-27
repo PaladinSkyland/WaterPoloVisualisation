@@ -13,3 +13,24 @@
     color: red;
     margin-left: 10px;
 }
+
+.validation-container {
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center;
+    margin-top: 20px; /* Augmenter la marge pour l'espace autour du bouton */
+}
+
+.validation-button {
+    padding: 10px 20px; /* Ajouter du padding pour une taille plus confortable */
+    background-color: #009879; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    border: none;
+    border-radius: 5px; /* Coins arrondis */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Animation de transition */
+}
+
+.validation-button:hover {
+    background-color: #0056b3; /* Changement de couleur au survol */
+}

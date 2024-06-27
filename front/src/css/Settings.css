@@ -1,7 +1,34 @@
-
-*{
+* {
     font-family: "Gill Sans", sans-serif;
     font-weight: 500;
+}
+
+.settings-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes égales */
+    gap: 20px;
+    padding: 20px;
+}
+
+.section {
+    padding: 3vh;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+/* Ensure each section takes at least the height of its content */
+.section {
+    min-height: fit-content;
+}
+
+
+/* Optional: Add spacing between sections */
+.section + .section {
+    margin-top: 20px;
 }
 
 .distance-button {
@@ -9,7 +36,6 @@
     flex-direction: column;
     padding: 0.5vh;
     margin-bottom: 1vh;
-
 }
 
 .distance-button input {
@@ -22,7 +48,6 @@
     border-bottom: 1px solid #999999;
     margin-right: 5px;
     transition: background-color 0.3s ease;
-
 }
 
 input[type="number"]:focus {
@@ -70,14 +95,13 @@ input[type="number"] {
     margin-top: 8px;
     border-radius: 50%; /* 50% for a perfect circle */
     transition: background-color 0.3s ease;
-
 }
 
 .distance-controller img:hover {
     background-color: #c2c2c2;
 }
 
-.margin-container{
+.margin-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -85,11 +109,10 @@ input[type="number"] {
     margin: 3vh 2vw;
 }
 
-.distance-container{
+.distance-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
-
 }
 
 .gender-container {
@@ -108,7 +131,7 @@ input[type="number"] {
     display: flex;
     align-items: center;
     cursor: pointer;
-    margin-left: 5px; /* Ajustez selon votre besoin */
+    margin-left: 5px; /* Adjust as needed */
 }
 
 .gender-label img {
@@ -123,4 +146,45 @@ input[type="number"] {
 .gender-label:hover img,
 .gender-label.selected img {
     background-color: #c2c2c2;
+}
+
+/* Modern table styling */
+.player-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 1em;
+    text-align: left;
+}
+
+.player-table th, .player-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.player-table th {
+    background-color: #009879;
+    color: #ffffff;
+}
+
+.player-table tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+.player-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Modern match selection styling */
+.match-selection select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.match-selection select:focus {
+    border-color: #009879;
+    outline: none;
 }

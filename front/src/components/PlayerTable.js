@@ -107,11 +107,12 @@ const PlayerTable = ({ value }) => {
                 </tbody>
             </table>
             <div className="validation-container">
-                <button onClick={handleValidation}>Valider</button>
-                {hasDuplicates && <span className="error-message">There are duplicate inputs.</span>}
+                <button className="validation-button" onClick={handleValidation}>Valider</button>
+                {hasDuplicates && <span className="error-message">Il y a des entrées en double.</span>}
             </div>
         </div>
     );
+    
 };
 
 export default PlayerTable;

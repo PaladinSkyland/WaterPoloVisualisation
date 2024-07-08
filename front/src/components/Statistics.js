@@ -6,7 +6,7 @@ const Statistics = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`http://localhost:8080/stats/${props.settings.match}`);
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/stats/${props.settings.match}`);
             const data = await response.json();
             setPlayers(data);
         };

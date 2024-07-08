@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/WaterPoloVisualisation/static/css/main.31909ef2.css",
-    "main.js": "/WaterPoloVisualisation/static/js/main.14d0f754.js",
+    "main.js": "/WaterPoloVisualisation/static/js/main.b8422beb.js",
     "index.html": "/WaterPoloVisualisation/index.html",
     "main.31909ef2.css.map": "/WaterPoloVisualisation/static/css/main.31909ef2.css.map",
-    "main.14d0f754.js.map": "/WaterPoloVisualisation/static/js/main.14d0f754.js.map"
+    "main.b8422beb.js.map": "/WaterPoloVisualisation/static/js/main.b8422beb.js.map"
   },
   "entrypoints": [
     "static/css/main.31909ef2.css",
-    "static/js/main.14d0f754.js"
+    "static/js/main.b8422beb.js"
   ]
 }

@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../css/PlayerTable.css';
 
-const PlayerTable = ({ value }) => {
-    const [players, setPlayers] = useState([]);
+const PlayerTable = ({pool, setPool}) => {
     const [duplicateNumbers, setDuplicateNumbers] = useState([]);
     const [duplicateNames, setDuplicateNames] = useState([]);
     const [hasDuplicates, setHasDuplicates] = useState(false);
 
-    useEffect(() => {
-        setPlayers(value);
-        console.log(value);
-    }, [value]);
+    const setPlayers = (value) => {
+        setPool((currentPool) => {
+            const newPool = Object.create(
+              Object.getPrototypeOf(currentPool),
+              Object.getOwnPropertyDescriptors(currentPool)
+            );
+            newPool.setPlayers(value);
+            return newPool;
+          });
+        
+    }
 
     const renderTableRows = () => {
-        return players.map((player, index) => (
+        return pool.players.map((player, index) => (
             <tr key={index}>
                 <td>{`P${index + 1}`}</td>
                 <td>
                     <input
                         type="number"
-                        value={player.number}
+                        value={player.number || ''}
                         className={duplicateNumbers.includes(index) ? 'duplicate' : ''}
                         onChange={(e) => handleNumberChange(e, index)}
                     />
@@ -37,13 +43,13 @@ const PlayerTable = ({ value }) => {
     };
 
     const handleNumberChange = (e, index) => {
-        const updatedPlayers = [...players];
+        const updatedPlayers = [...pool.players];
         updatedPlayers[index].number = e.target.value;
         setPlayers(updatedPlayers);
     };
 
     const handleNameChange = (e, index) => {
-        const updatedPlayers = [...players];
+        const updatedPlayers = [...pool.players];
         updatedPlayers[index].name = e.target.value;
         setPlayers(updatedPlayers);
     };
@@ -52,7 +58,7 @@ const PlayerTable = ({ value }) => {
         const numberMap = {};
         const nameMap = {};
         
-        players.forEach((player, index) => {
+        pool.players.forEach((player, index) => {
             if (player.number) {
                 if (!numberMap[player.number]) {
                     numberMap[player.number] = [];
@@ -84,11 +90,13 @@ const PlayerTable = ({ value }) => {
         } else {
             setHasDuplicates(false);
             console.log("No duplicates found.");
-            players.forEach((player, index) => {
-                value[index].setNumber(player.number);
-                value[index].setName(player.name);
+            const updatedPlayers = [...pool.players];
+            pool.players.forEach((player, index) => {
+                updatedPlayers[index].setNumber(player.number);
+                updatedPlayers[index].setName(player.name);
+                setPlayers(updatedPlayers);
             });
-            console.log(value);
+            console.log(pool.players);
         }
     };
 

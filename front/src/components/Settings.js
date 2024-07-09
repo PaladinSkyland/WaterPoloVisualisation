@@ -5,7 +5,7 @@ import SwimmingPool from './SwimmingPool';
 import PlayerTable from './PlayerTable';
 import SelectMatchs from './SelectMatchs';
 
-function Settings({ pool, settings, setSettings }) {
+function Settings({ pool, setPool, settings, setSettings}) {
 
     const maxHorizontalLimit = settings.gender === "male" ? 18 : 23;
     const minHorizontalLimit = 1.75;
@@ -99,7 +99,7 @@ function Settings({ pool, settings, setSettings }) {
     
             <div className='section player-table'>
                 <h2>Tableau des joueurs</h2>
-                <PlayerTable value={pool.players} />
+                <PlayerTable pool={pool} setPool={setPool} />
             </div>
         </div>
     );

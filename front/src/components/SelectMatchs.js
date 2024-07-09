@@ -7,7 +7,7 @@ function SelectMatchs({ value, handleChange }) {
     useEffect(() => {
         async function fetchData() {
             // Make an API call to fetch the options
-            const response = await fetch('http://localhost:8080/matchs');
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/matchs`);
             const data = await response.json();
             setOptions(data);
         }

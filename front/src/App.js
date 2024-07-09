@@ -9,9 +9,6 @@ import ProgressBar from './components/ProgressBar';
 import Statistics from './components/Statistics';
 
 function App() {
-  const address = 'ws://localhost:8080';
-  
-
   const [pool, setPool] = useState(new Pool());
   const [settings, setSettings] = useState(() => {
     const storedValues = localStorage.getItem('settings');
@@ -58,10 +55,10 @@ useEffect(() => {
       );
       break;
     case 'settings':
-      content = <Settings pool={pool} settings={settings} setSettings={setSettings} />;
+      content = <Settings pool={pool} setPool={setPool} settings={settings} setSettings={setSettings} />;
       break;
     case 'statistics':
-        content = <Statistics settings={settings} />;
+        content = <Statistics settings={settings} pool={pool}/>;
         break;
     default:
       content = 'pool';
@@ -73,7 +70,8 @@ useEffect(() => {
   }, [settings]);
 
   useEffect(() => {
-    const newWs = new WebSocket(`${address}?file=${settings.match}`); // Adresse du serveur WebSocket
+    const newWs = new WebSocket(`${process.env.REACT_APP_WS_URL}?file=${settings.match}`); // Adresse du serveur WebSocket
+
     setWs(newWs);
     
     newWs.onopen = () => {

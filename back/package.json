@@ -14,5 +14,8 @@
     "csv": "^6.3.8",
     "express": "^4.19.2",
     "ws": "^8.17.0"
+  },
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.7"
   }
 }

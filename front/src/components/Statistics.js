@@ -10,8 +10,8 @@ const Statistics = (props) => {
             const data = await response.json();
 
             // merge players with pool players
-            const players = data.map(player => {
-                const poolPlayer = props.pool.players.find(poolPlayer => poolPlayer.tag === player.anchor);
+            const players = props.pool.players.map(poolPlayer => {
+                const player = data.find(player => poolPlayer.tag === player.anchor);
                 return {
                     ...player,
                     ...poolPlayer

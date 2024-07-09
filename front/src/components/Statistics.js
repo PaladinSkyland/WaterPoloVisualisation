@@ -8,11 +8,21 @@ const Statistics = (props) => {
         const fetchData = async () => {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/stats/${props.settings.match}`);
             const data = await response.json();
-            setPlayers(data);
+
+            // merge players with pool players
+            const players = data.map(player => {
+                const poolPlayer = props.pool.players.find(poolPlayer => poolPlayer.tag === player.anchor);
+                return {
+                    ...player,
+                    ...poolPlayer
+                };
+            });
+            console.log(players);
+            setPlayers(players);
         };
 
         fetchData();
-    }, [props.settings.match]);
+    }, [props.settings.match, props.pool.players]);
     
 
     const formatTime = (time) => {
@@ -31,13 +41,14 @@ const Statistics = (props) => {
     }
 
     return (
-        <div class="stats-container">
-            <h1 class="stats-header">Statistiques des joueurs</h1>
-            <table class="stats-table">
-                <thead class="table-header">
-                    <tr class="header-row">
+        <div className="stats-container">
+            <h1 className="stats-header">Statistiques des joueurs</h1>
+            <table className="stats-table">
+                <thead className="table-header">
+                    <tr className="header-row">
                         <th>Joueur</th>
-                        <th>Tag</th>
+                        <th>Numéro</th>
+                        <th>Nom</th>
                         <th>Distance totale</th>
                         <th>Temps de jeu</th>
                         <th>Vitess moyenne</th>
@@ -45,10 +56,13 @@ const Statistics = (props) => {
                 </thead>
                 <tbody>
                     {players.map((player, index) => (
-                        <tr class="data-row" key={index}>
+                        <tr className="data-row" key={index}>
                             <td>{`P${index + 1}`}</td>
                             <td>
-                                {player.anchor}
+                                {player.number}
+                            </td>
+                            <td>
+                                {player.name}
                             </td>
                             <td>
                                 {formatDistance(player.total_distance)}

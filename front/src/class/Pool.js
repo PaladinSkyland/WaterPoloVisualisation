@@ -80,5 +80,9 @@ class Pool {
     removeallplayer(){
         this.players = [];
     }
+
+    setPlayers(players) {
+        this.players = players;
+    }
 }
 export default Pool;

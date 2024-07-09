@@ -29,7 +29,14 @@ const CSV_FILES = {
     news16: 'data/news/csv/Test_16_scénario-2-2_marche-libre_45s_3-tags.csv',
     news17: 'data/news/csv/Test_17_scénario-2-2_marche-libre_45s_3-tags.csv',
     news18: 'data/news/csv/Test_18_scénario-2-3_marche-libre-accélération-décélration_45s_3-tags.csv',
-    news19: 'data/news/csv/Test_19_scénario-2-3_marche-libre-accélération-décélration_45s_3-tags.csv'
+    news19: 'data/news/csv/Test_19_scénario-2-3_marche-libre-accélération-décélration_45s_3-tags.csv',
+    merge: 'data/news/csv/merged.csv',
+    merge1: 'data/news/csv/merged1.csv',
+    merge2: 'data/news/csv/merged2.csv',
+    merge3: 'data/news/csv/merged3.csv',
+    simulated_full_team: 'data/news/csv/simulated_full_team1.csv',
+    simulated_triangle: 'data/news/csv/simulated_triangle1.csv',
+
 }
 
 require('./db.init')(db, CSV_FILES);
